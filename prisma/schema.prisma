@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id           String   @id @default(cuid())
+  churchName   String
+  tagline      String?
+  locationText String
+  mapLink      String?
+  logoUrl      String?
+  facebookUrl  String?
+  instagramUrl String?
+  youtubeUrl   String?
+  twitterUrl   String?
+  phoneNumbers String[] @default([])
+  email        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model Program {
+  id            String   @id @default(cuid())
+  title         String
+  day           String   // Sunday, Monday, etc.
+  startTime     String   // HH:mm format
+  endTime       String   // HH:mm format
+  venue         String
+  contacts      String[] @default([])
+  posterImageUrl String?
+  description   String?
+  isActive      Boolean  @default(true)
+  orderIndex    Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  updatedBy     String?
+
+  @@map("programs")
+  @@index([day, isActive])
+}
+
+model Event {
+  id            String   @id @default(cuid())
+  title         String
+  date          DateTime
+  time          String   // HH:mm format
+  venue         String
+  entryFee      String?
+  description   String?
+  speakers      String[] @default([])
+  posterImageUrl String?
+  isUpcoming    Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  updatedBy     String?
+
+  @@map("events")
+  @@index([date, isUpcoming])
+}
+
+model LiveStream {
+  id              String    @id @default(cuid())
+  isLive          Boolean   @default(false)
+  platform        String?   // youtube, facebook, googlemeet
+  youtubeLiveUrl  String?
+  facebookLiveUrl String?
+  googleMeetUrl   String?
+  title           String?
+  scheduleTime    DateTime?
+  updatedAt       DateTime  @updatedAt
+  updatedBy       String?
+
+  @@map("live_streams")
+}
+
+model SermonSource {
+  id                String   @id @default(cuid())
+  youtubePlaylistUrl String?
+  latestSermonUrl   String?
+  updatedAt         DateTime @updatedAt
+  updatedBy         String?
+
+  @@map("sermon_sources")
+}
+
+model Sermon {
+  id            String   @id @default(cuid())
+  title         String
+  description   String?
+  speaker       String?
+  date          DateTime
+  videoUrl      String?  @map("video_url")
+  audioUrl      String?  @map("audio_url")
+  thumbnailUrl  String?  @map("thumbnail_url")
+  duration      Int?     // Duration in minutes
+  views         Int      @default(0)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  updatedBy     String?  @map("updated_by")
+
+  @@map("sermons")
+  @@index([date])
+}
+
+model Leader {
+  id          String   @id @default(cuid())
+  name        String
+  title       String
+  bio         String?
+  photoUrl    String?
+  facebookUrl String?
+  instagramUrl String?
+  twitterUrl  String?
+  orderIndex  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?
+
+  @@map("leaders")
+  @@index([orderIndex])
+}
+
+model UpdateLink {
+  id           String   @id @default(cuid())
+  title        String
+  url          String
+  description  String?  @default("")
+  category     String   @default("General")
+  isActive     Boolean  @default(true) @map("is_active")
+  orderIndex   Int      @default(0) @map("order_index")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  updatedBy    String?  @map("updated_by")
+
+  @@map("update_links")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  fullName     String?
+  role         String   @default("admin") // admin, moderator, editor
+  isSuperAdmin Boolean  @default(false) @map("is_super_admin")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("admins")
+}

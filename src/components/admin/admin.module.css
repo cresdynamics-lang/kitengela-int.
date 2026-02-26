@@ -1,0 +1,292 @@
+.container {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header h2 {
+  margin: 0;
+  color: #1a1a2e;
+  font-size: 1.8rem;
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.95rem;
+  font-weight: normal;
+}
+
+.addButton {
+  padding: 10px 20px;
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.addButton:hover {
+  background: #16213e;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+}
+
+.formModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.formContent {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.formContent h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #1a1a2e;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: #FFD700;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.form {
+  max-width: 800px;
+}
+
+.helpText {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.liveStreamLinkInput {
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.detectedPlatform {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #228B22;
+}
+
+.infoBox {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-left: 4px solid #FFD700;
+  border-radius: 6px;
+}
+
+.infoBox h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+  font-size: 1.2rem;
+}
+
+.infoBox ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.infoBox li {
+  margin-bottom: 0.5rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.saveButton {
+  padding: 10px 20px;
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 1;
+}
+
+.saveButton:hover {
+  background: #16213e;
+}
+
+.cancelButton {
+  padding: 10px 20px;
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 1;
+}
+
+.cancelButton:hover {
+  background: #d0d0d0;
+}
+
+.table {
+  overflow-x: auto;
+}
+
+.table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: #f5f5f5;
+}
+
+.table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.empty {
+  text-align: center;
+  color: #999;
+  padding: 2rem;
+}
+
+.editButton,
+.deleteButton {
+  padding: 6px 12px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.editButton {
+  background: #FFD700;
+  color: #1a1a2e;
+}
+
+.editButton:hover {
+  background: #FFA500;
+}
+
+.deleteButton {
+  background: #DC143C;
+  color: white;
+}
+
+.deleteButton:hover {
+  background: #b01030;
+}
+
+.active {
+  color: #228B22;
+  font-weight: 600;
+}
+
+.inactive {
+  color: #999;
+}
+
+.roleSelect {
+  padding: 4px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+}

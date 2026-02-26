@@ -1,0 +1,32 @@
+{
+  "name": "kitengela",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "next": "16.1.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "axios": "^1.6.2",
+    "@prisma/client": "^5.9.1",
+    "argon2": "^0.31.2",
+    "resend": "^6.9.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^5.3.3",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.1.6",
+    "prisma": "^5.9.1",
+    "dotenv": "^16.3.1"
+  }
+}

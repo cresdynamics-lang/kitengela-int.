@@ -1,0 +1,136 @@
+.contactSection {
+  padding: 80px 0;
+  background: white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sectionTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #666;
+  margin-bottom: 3rem;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.contactCard {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.contactCard:hover {
+  transform: translateY(-5px);
+  border-color: #FFD700;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.phoneNumbers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.phoneLink {
+  color: #DC143C;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.phoneLink:hover {
+  color: #1a1a2e;
+  text-decoration: underline;
+}
+
+.emailLink {
+  color: #DC143C;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.emailLink:hover {
+  color: #1a1a2e;
+  text-decoration: underline;
+}
+
+.address {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.address strong {
+  color: #1a1a2e;
+  font-size: 1.1rem;
+}
+
+.socialLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.socialLink {
+  color: #1a1a2e;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  background: white;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+  background: #FFD700;
+  color: #1a1a2e;
+  transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .contactGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .contactCard {
+    padding: 1.5rem;
+  }
+}
