@@ -1,8 +1,5 @@
-'use client'
-
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
 import { publicApi } from '@/lib/api'
 
@@ -61,14 +58,13 @@ export default function Header() {
       <header className={styles.header}>
         <div className={styles.container}>
           <div className={styles.logoContainer}>
-            <Link href="/" className={styles.logoLink} onClick={closeMenu}>
-              <Image
+            <Link to="/" className={styles.logoLink} onClick={closeMenu}>
+              <img
                 src="/logo/chuurchlogo.jpeg"
                 alt="VOSH Church Logo"
                 width={80}
                 height={80}
                 className={styles.logo}
-                priority
               />
               <div className={styles.logoText}>
                 <h1 className={styles.churchName}>Voice Of Salvation And Healing Church Int&apos;l</h1>
@@ -79,15 +75,17 @@ export default function Header() {
           
           <div className={styles.mobileActions}>
             {/* Red "Join Us Live" button - visible on small screens, left of hamburger */}
-            <a
-              href={liveStreamUrl || '/sermons'}
-              target={liveStreamUrl ? '_blank' : undefined}
-              rel={liveStreamUrl ? 'noopener noreferrer' : undefined}
-              className={styles.joinUsLiveButton}
-            >
-              {isLive && <span className={styles.liveDot}></span>}
-              Join Us Live
-            </a>
+            {liveStreamUrl && (
+              <a
+                href={liveStreamUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.joinUsLiveButton}
+              >
+                {isLive && <span className={styles.liveDot}></span>}
+                Join Us Live
+              </a>
+            )}
             <button 
               className={`${styles.hamburger} ${isMenuOpen ? styles.hamburgerOpen : ''}`}
               onClick={toggleMenu}
@@ -101,23 +99,17 @@ export default function Header() {
           </div>
 
           <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
-            <Link href="/" className={styles.navLink} onClick={closeMenu}>Home</Link>
-            <Link href="/about" className={styles.navLink} onClick={closeMenu}>About</Link>
-            <Link href="/services" className={styles.navLink} onClick={closeMenu}>Services</Link>
-            <Link href="/leadership" className={styles.navLink} onClick={closeMenu}>Leadership</Link>
-            <Link href="/sermons" className={styles.navLink} onClick={closeMenu}>Sermons</Link>
-            <Link href="/give" className={styles.navLink} onClick={closeMenu}>Give</Link>
-            <Link href="/contact" className={styles.navLink} onClick={closeMenu}>Contact</Link>
-            {liveStreamUrl ? (
+            <Link to="/" className={styles.navLink} onClick={closeMenu}>Home</Link>
+            <Link to="/about" className={styles.navLink} onClick={closeMenu}>About</Link>
+            <Link to="/services" className={styles.navLink} onClick={closeMenu}>Services</Link>
+            <Link to="/leadership" className={styles.navLink} onClick={closeMenu}>Leadership</Link>
+            <Link to="/give" className={styles.navLink} onClick={closeMenu}>Give</Link>
+            <Link to="/contact" className={styles.navLink} onClick={closeMenu}>Contact</Link>
+            {liveStreamUrl && (
               <a href={liveStreamUrl} target="_blank" rel="noopener noreferrer" className={styles.liveButton} onClick={closeMenu}>
                 {isLive && <span className={styles.liveDot}></span>}
                 LIVE STREAM
               </a>
-            ) : (
-              <Link href="/sermons" className={styles.liveButton} onClick={closeMenu}>
-                {isLive && <span className={styles.liveDot}></span>}
-                LIVE STREAM
-              </Link>
             )}
           </nav>
         </div>

@@ -22,7 +22,14 @@ export default function RootLayout({
           referrerPolicy="no-referrer"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <noscript>
+          <div style={{ padding: '2rem', background: '#1a1a2e', color: '#fff', fontFamily: 'system-ui', textAlign: 'center' }}>
+            Voice Of Salvation And Healing Church – Kitengela. Please enable JavaScript to view the full site.
+          </div>
+        </noscript>
+        {children}
+      </body>
     </html>
   )
 }

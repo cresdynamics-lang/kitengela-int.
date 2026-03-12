@@ -1,5 +1,3 @@
-'use client'
-
 import styles from './CoreValues.module.css'
 
 const CORE_VALUES = ['Prayer', 'Stewardship', 'Holiness', 'Advocacy', 'Unity']

@@ -1,6 +1,5 @@
-'use client'
-
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import styles from './Footer.module.css'
 import { publicApi } from '@/lib/api'
 
@@ -40,13 +39,12 @@ export default function Footer() {
             <div className={styles.footerSection}>
               <h4 className={styles.footerHeading}>Quick Links</h4>
               <ul className={styles.footerLinks}>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/leadership">Leadership</a></li>
-                <li><a href="/sermons">Sermons</a></li>
-                <li><a href="/give">Give</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/about">About Us</Link></li>
+                <li><Link to="/services">Services</Link></li>
+                <li><Link to="/leadership">Leadership</Link></li>
+                <li><Link to="/give">Give</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
               </ul>
               {adminLinks.length > 0 && (
                 <>
@@ -93,7 +91,7 @@ export default function Footer() {
               <strong>M-Pesa Paybill:</strong> 400222<br />
               <strong>Account:</strong> 1756443#offering/tithe
             </p>
-            <a href="/give" className={styles.giveLink}>Learn More →</a>
+            <Link to="/give" className={styles.giveLink}>Learn More →</Link>
             <div className={styles.socialLinks}>
               <h5 className={styles.socialTitle}>Follow Us</h5>
               <div className={styles.socialIcons}>

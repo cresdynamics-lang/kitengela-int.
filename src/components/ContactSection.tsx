@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { publicApi } from '@/lib/api'
 import styles from './ContactSection.module.css'

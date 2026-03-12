@@ -1,5 +1,3 @@
-'use client'
-
 import { useState, useEffect } from 'react'
 import styles from './admin.module.css'
 import { adminApi } from '@/lib/api'
@@ -54,7 +52,7 @@ export default function AdminRights() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const token = localStorage.getItem('adminToken')
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+    const apiUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || ''
     
     try {
       if (editingId) {
@@ -121,7 +119,7 @@ export default function AdminRights() {
 
   const handleRoleUpdate = async (id: number, role: string, isSuperAdmin: boolean) => {
     const token = localStorage.getItem('adminToken')
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+    const apiUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || ''
     
     try {
       const response = await fetch(`${apiUrl}/api/admin/admins/${id}/role`, {
@@ -148,7 +146,7 @@ export default function AdminRights() {
     
     try {
       const token = localStorage.getItem('adminToken')
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+      const apiUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || ''
       const response = await fetch(`${apiUrl}/api/admin/admins/${id}`, {
         method: 'DELETE',
         headers: {

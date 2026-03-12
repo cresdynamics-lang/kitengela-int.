@@ -1,7 +1,4 @@
-'use client'
-
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import styles from './Carousel.module.css'
 
 interface CarouselImage {
@@ -68,14 +65,7 @@ export default function Carousel({ images }: CarouselProps) {
               }`}
             >
               <div className={styles.imageWrapper}>
-                <Image
-                  src={image.image}
-                  alt={image.title}
-                  fill
-                  priority={index === currentIndex}
-                  className={styles.image}
-                  sizes="100vw"
-                />
+                <img src={image.image} alt={image.title} className={styles.image} />
                 <div className={styles.overlay} />
                 <div className={styles.content}>
                   <h2 className={styles.title}>{image.title}</h2>

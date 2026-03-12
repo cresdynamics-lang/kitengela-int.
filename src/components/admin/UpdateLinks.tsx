@@ -1,5 +1,3 @@
-'use client'
-
 import { useState, useEffect } from 'react'
 import styles from './admin.module.css'
 import { adminApi } from '@/lib/api'

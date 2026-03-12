@@ -1,7 +1,4 @@
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.length > 0
-    ? process.env.NEXT_PUBLIC_API_URL
-    : ''
+const API_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || ''
 
 async function fetchApi<T>(endpoint: string): Promise<{ success: boolean; data: T }> {
   try {
