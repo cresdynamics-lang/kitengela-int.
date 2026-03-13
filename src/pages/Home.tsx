@@ -157,7 +157,14 @@ export default function Home() {
             <p className={styles.bannerText}>
               Join us every Wednesday for a time of corporate prayer and intercession. Connect online from wherever you are and experience the power of agreement in prayer.
             </p>
-            <Link to="/services" className={styles.bannerCta}>Join Wednesday Prayers →</Link>
+            <a
+              href={getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) || liveStreamUrl || '/services'}
+              target={getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) || liveStreamUrl ? '_blank' : undefined}
+              rel={getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) || liveStreamUrl ? 'noopener noreferrer' : undefined}
+              className={styles.bannerCta}
+            >
+              Join Wednesday Prayers →
+            </a>
           </div>
         </section>
       </ScrollReveal>

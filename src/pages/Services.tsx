@@ -16,57 +16,86 @@ interface Program {
   contacts: string[]
 }
 
+interface ServiceCard {
+  id: string
+  title: string
+  description: string | null
+  thumbnailUrl: string | null
+  linkUrl: string | null
+}
+
 export default function Services() {
   const [programs, setPrograms] = useState<Program[]>([])
   const [groupedPrograms, setGroupedPrograms] = useState<Record<string, Program[]>>({})
   const [loading, setLoading] = useState(true)
-  const featuredCards = [
-    {
-      id: 'sunday',
-      title: 'Sunday Worship Service',
-      image: '/sundayservices.jpeg',
-      description: 'Main Sunday celebration service with worship, Word, and ministry.',
-      cta: 'Join Sunday Service',
-    },
-    {
-      id: 'wednesday',
-      title: 'Wednesday Online Prayers',
-      image: '/midweekwednesday.jpeg',
-      description: 'Midweek online prayer gathering to seek God together.',
-      cta: 'Join Wednesday Prayers',
-    },
-    {
-      id: 'friday',
-      title: 'Friday Night Service',
-      image: '/midweekservicefriday.jpeg',
-      description: 'Friday night encounter in worship, intercession, and the Word.',
-      cta: 'Join Friday Night',
-    },
-    {
-      id: 'biblestudy',
-      title: 'Sunday Bible Study',
-      image: '/biblestudysundaymorning.jpeg',
-      description: 'Grow deeper in Scripture before the main Sunday services.',
-      cta: 'Join Bible Study',
-    },
-  ]
+  const [serviceCards, setServiceCards] = useState<ServiceCard[]>([])
 
   useEffect(() => {
-    publicApi.getWeeklyPrograms().then((response) => {
-      if (response.success && Array.isArray(response.data)) {
-        const programs = response.data as Program[]
-        setPrograms(programs)
-        const grouped: Record<string, Program[]> = {}
-        programs.forEach((p) => {
-          if (!grouped[p.day]) grouped[p.day] = []
-          grouped[p.day].push(p)
-        })
-        setGroupedPrograms(grouped)
-      }
-    }).finally(() => setLoading(false))
+    Promise.all([publicApi.getWeeklyPrograms(), publicApi.getSermons()])
+      .then(([programsRes, sermonsRes]) => {
+        if (programsRes.success && Array.isArray(programsRes.data)) {
+          const progData = programsRes.data as Program[]
+          setPrograms(progData)
+          const grouped: Record<string, Program[]> = {}
+          progData.forEach((p) => {
+            if (!grouped[p.day]) grouped[p.day] = []
+            grouped[p.day].push(p)
+          })
+          setGroupedPrograms(grouped)
+        }
+
+        if (sermonsRes.success && Array.isArray(sermonsRes.data)) {
+          const mapped = (sermonsRes.data as any[])
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .slice(0, 4)
+            .map((s) => ({
+              id: s.id,
+              title: s.title || 'Service',
+              description: s.description || null,
+              thumbnailUrl: s.thumbnailUrl || null,
+              linkUrl: s.videoUrl || s.audioUrl || null,
+            }))
+          setServiceCards(mapped)
+        }
+      })
+      .finally(() => setLoading(false))
   }, [])
 
   const daysOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+  const effectiveServiceCards: ServiceCard[] =
+    serviceCards.length > 0
+      ? serviceCards
+      : [
+          {
+            id: 'sunday',
+            title: 'Sunday Worship Service',
+            description: 'Main Sunday celebration service with worship, Word, and ministry.',
+            thumbnailUrl: '/sundayservices.jpeg',
+            linkUrl: null,
+          },
+          {
+            id: 'wednesday',
+            title: 'Wednesday Online Prayers',
+            description: 'Midweek online prayer gathering to seek God together.',
+            thumbnailUrl: '/midweekwednesday.jpeg',
+            linkUrl: null,
+          },
+          {
+            id: 'friday',
+            title: 'Friday Night Service',
+            description: 'Friday night encounter in worship, intercession, and the Word.',
+            thumbnailUrl: '/midweekservicefriday.jpeg',
+            linkUrl: null,
+          },
+          {
+            id: 'biblestudy',
+            title: 'Sunday Bible Study',
+            description: 'Grow deeper in Scripture before the main Sunday services.',
+            thumbnailUrl: '/biblestudysundaymorning.jpeg',
+            linkUrl: null,
+          },
+        ]
 
   return (
     <main>
@@ -78,18 +107,29 @@ export default function Services() {
         </ScrollReveal>
         <ScrollReveal direction="right">
           <div className={styles.featuredGrid}>
-            {featuredCards.map((card) => (
-              <div key={card.id} className={styles.featuredCard}>
-                <div className={styles.featuredImageWrap}>
-                  <img src={card.image} alt={card.title} className={styles.featuredImage} />
+            {effectiveServiceCards.map((card) => (
+                <div key={card.id} className={styles.featuredCard}>
+                  {card.thumbnailUrl && (
+                    <div className={styles.featuredImageWrap}>
+                      <img src={card.thumbnailUrl} alt={card.title} className={styles.featuredImage} />
+                    </div>
+                  )}
+                  <div className={styles.featuredContent}>
+                    <h2 className={styles.featuredTitle}>{card.title}</h2>
+                    {card.description && (
+                      <p className={styles.featuredDescription}>{card.description}</p>
+                    )}
+                    <a
+                      href={card.linkUrl || '/services'}
+                      target={card.linkUrl ? '_blank' : undefined}
+                      rel={card.linkUrl ? 'noopener noreferrer' : undefined}
+                      className={styles.featuredButton}
+                    >
+                      {card.linkUrl ? 'Open Stream / Details' : 'View Service Details'}
+                    </a>
+                  </div>
                 </div>
-                <div className={styles.featuredContent}>
-                  <h2 className={styles.featuredTitle}>{card.title}</h2>
-                  <p className={styles.featuredDescription}>{card.description}</p>
-                  <a href="/services" className={styles.featuredButton}>{card.cta}</a>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </ScrollReveal>
         {loading ? (
