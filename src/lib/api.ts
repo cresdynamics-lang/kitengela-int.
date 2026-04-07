@@ -1,15 +1,93 @@
 const API_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || ''
+const PUBLIC_CACHE_TTL_MS = 30_000
+const ADMIN_CACHE_TTL_MS = 5 * 60_000
+const REQUEST_TIMEOUT_MS = 10_000
+
+function readCache<T>(key: string, ttlMs: number): { success: boolean; data: T } | null {
+  try {
+    if (typeof window === 'undefined') return null
+    const raw = window.sessionStorage.getItem(key)
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as { ts: number; value: { success: boolean; data: T } }
+    if (Date.now() - parsed.ts > ttlMs) {
+      window.sessionStorage.removeItem(key)
+      return null
+    }
+    return parsed.value
+  } catch {
+    return null
+  }
+}
+
+function readCacheAnyAge<T>(key: string): { success: boolean; data: T } | null {
+  try {
+    if (typeof window === 'undefined') return null
+    const raw = window.sessionStorage.getItem(key)
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as { ts: number; value: { success: boolean; data: T } }
+    return parsed.value
+  } catch {
+    return null
+  }
+}
+
+function writeCache<T>(key: string, value: { success: boolean; data: T }) {
+  try {
+    if (typeof window === 'undefined') return
+    window.sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), value }))
+  } catch {
+    // Ignore cache write errors
+  }
+}
+
+function clearCacheByPrefix(prefix: string) {
+  try {
+    if (typeof window === 'undefined') return
+    const keys = Object.keys(window.sessionStorage)
+    keys.forEach((key) => {
+      if (key.startsWith(prefix)) {
+        window.sessionStorage.removeItem(key)
+      }
+    })
+  } catch {
+    // Ignore cache clear errors
+  }
+}
+
+async function fetchWithTimeout(url: string, options: RequestInit = {}) {
+  const controller = new AbortController()
+  const timer = globalThis.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+  try {
+    return await fetch(url, { ...options, signal: controller.signal })
+  } finally {
+    globalThis.clearTimeout(timer)
+  }
+}
 
 async function fetchApi<T>(endpoint: string): Promise<{ success: boolean; data: T }> {
+  const cacheKey = `api-cache:public:${endpoint}`
   try {
-    const response = await fetch(`${API_URL}${endpoint}`)
+    const cached = readCache<T>(cacheKey, PUBLIC_CACHE_TTL_MS)
+    if (cached) return cached
+
+    const response = await fetchWithTimeout(`${API_URL}${endpoint}`)
     const contentType = response.headers.get('content-type')
+    if (!response.ok) {
+      if (contentType?.includes('application/json')) {
+        const errorData = await response.json().catch(() => ({} as any))
+        throw new Error(errorData?.error || `Request failed (${response.status})`)
+      }
+      throw new Error(`Request failed (${response.status})`)
+    }
     if (!contentType?.includes('application/json')) {
-      throw new Error(response.ok ? 'Invalid response format' : `Request failed (${response.status})`)
+      throw new Error('Invalid response format')
     }
     const data = await response.json()
+    writeCache(cacheKey, data)
     return data
   } catch (error) {
+    const stale = readCacheAnyAge<T>(cacheKey)
+    if (stale) return stale
     console.error(`Error fetching ${endpoint}:`, error)
     throw error
   }
@@ -63,8 +141,15 @@ export const publicApi = {
 }
 
 async function fetchApiWithAuth<T>(endpoint: string, token: string, options: RequestInit = {}): Promise<{ success: boolean; data: T }> {
+  const method = (options.method || 'GET').toUpperCase()
+  const cacheKey = `api-cache:admin:${token}:${endpoint}`
   try {
-    const response = await fetch(`${API_URL}${endpoint}`, {
+    if (method === 'GET') {
+      const cached = readCache<T>(cacheKey, ADMIN_CACHE_TTL_MS)
+      if (cached) return cached
+    }
+
+    const response = await fetchWithTimeout(`${API_URL}${endpoint}`, {
       ...options,
       headers: {
         'Content-Type': 'application/json',
@@ -73,12 +158,29 @@ async function fetchApiWithAuth<T>(endpoint: string, token: string, options: Req
       },
     })
     const contentType = response.headers.get('content-type')
+    if (!response.ok) {
+      if (contentType?.includes('application/json')) {
+        const errorData = await response.json().catch(() => ({} as any))
+        throw new Error(errorData?.error || `Request failed (${response.status})`)
+      }
+      throw new Error(`Request failed (${response.status})`)
+    }
     if (!contentType?.includes('application/json')) {
-      throw new Error(response.ok ? 'Invalid response format' : `Request failed (${response.status})`)
+      throw new Error('Invalid response format')
     }
     const data = await response.json()
+    if (method === 'GET') {
+      writeCache(cacheKey, data)
+    } else {
+      clearCacheByPrefix(`api-cache:admin:${token}:`)
+      clearCacheByPrefix('api-cache:public:/api/public/')
+    }
     return data
   } catch (error) {
+    if (method === 'GET') {
+      const stale = readCacheAnyAge<T>(cacheKey)
+      if (stale) return stale
+    }
     console.error(`Error fetching ${endpoint}:`, error)
     throw error
   }
@@ -86,7 +188,7 @@ async function fetchApiWithAuth<T>(endpoint: string, token: string, options: Req
 
 export const adminApi = {
   async login(username: string, password: string) {
-    const response = await fetch(`${API_URL}/api/admin/login`, {
+    const response = await fetchWithTimeout(`${API_URL}/api/admin/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),

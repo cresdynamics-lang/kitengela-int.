@@ -251,3 +251,121 @@
   .joinButton { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
   .planVisitLink { font-size: 0.85rem; margin-top: 1.5rem; }
 }
+
+.storySection {
+  position: relative;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
+  border-top: 2px solid rgba(255, 215, 0, 0.38);
+  border-bottom: 2px solid rgba(255, 215, 0, 0.28);
+}
+
+.storySectionReverse {
+  justify-content: flex-end;
+}
+
+.storyBackgroundLayer {
+  position: absolute;
+  inset: 0;
+}
+
+.storyBackgroundImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+
+.storyBackgroundImageActive {
+  opacity: 1;
+}
+
+.storyOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(8, 12, 20, 0.72) 0%, rgba(8, 12, 20, 0.58) 45%, rgba(8, 12, 20, 0.7) 100%);
+}
+
+.storyContent {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 760px);
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 2.5rem);
+  color: #fff;
+}
+
+.storyGap {
+  position: relative;
+  height: 26px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(6, 10, 18, 0.96) 0%, rgba(19, 28, 44, 0.9) 50%, rgba(8, 12, 20, 0.96) 100%);
+}
+
+.storyGap::before,
+.storyGap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.storyGap::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.28) 35%, rgba(220, 20, 60, 0.32) 55%, transparent 100%);
+  transform: translateX(-100%);
+  animation: gapSweep 5.5s linear infinite;
+}
+
+.storyGap::after {
+  background: radial-gradient(60% 140% at 50% 50%, rgba(255, 215, 0, 0.22) 0%, transparent 75%);
+  animation: gapPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes gapSweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes gapPulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.85; }
+}
+
+@media (max-width: 768px) {
+  .storySection {
+    min-height: 550px;
+  }
+  .storyGap {
+    height: 20px;
+  }
+  .storySectionReverse {
+    justify-content: flex-start;
+  }
+  .storyOverlay {
+    background: linear-gradient(180deg, rgba(8, 12, 20, 0.62) 0%, rgba(8, 12, 20, 0.74) 100%);
+  }
+  .storyContent {
+    width: 100%;
+    padding: 1.25rem 1rem 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .storySection {
+    min-height: 480px;
+  }
+  .storyGap {
+    height: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .storySection {
+    min-height: 420px;
+  }
+}

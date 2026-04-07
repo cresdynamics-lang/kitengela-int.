@@ -89,16 +89,23 @@ export default function ServicesPage() {
                         {program.description && (
                           <p className={styles.programDescription}>{program.description}</p>
                         )}
-                        {program.contacts && program.contacts.length > 0 && (
-                          <div className={styles.programContacts}>
-                            <strong>Contact:</strong>{' '}
-                            {program.contacts.map((contact, idx) => (
-                              <a key={idx} href={`tel:${contact.replace(/\s/g, '')}`} className={styles.contactLink}>
-                                {contact}
-                              </a>
-                            ))}
-                          </div>
-                        )}
+                        {program.contacts && (() => {
+                          try {
+                            const contacts = JSON.parse(program.contacts)
+                            return contacts.length > 0 ? (
+                              <div className={styles.programContacts}>
+                                <strong>Contact:</strong>{' '}
+                                {contacts.map((contact, idx) => (
+                                  <a key={idx} href={`tel:${contact.replace(/\s/g, '')}`} className={styles.contactLink}>
+                                    {contact}
+                                  </a>
+                                ))}
+                              </div>
+                            ) : null
+                          } catch {
+                            return null
+                          }
+                        })()}
                       </div>
                     ))}
                   </div>

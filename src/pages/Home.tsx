@@ -43,6 +43,7 @@ export default function Home() {
   const [sundaySermon, setSundaySermon] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [liveStreamUrl, setLiveStreamUrl] = useState<string | null>(null)
+  const [sectionTick, setSectionTick] = useState(0)
 
   useEffect(() => {
     publicApi.getLive().then((r) => {
@@ -71,6 +72,15 @@ export default function Home() {
       setServices(prog)
     }).finally(() => setLoading(false))
   }, [])
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setSectionTick((prev) => prev + 1)
+    }, 7000)
+    return () => window.clearInterval(interval)
+  }, [])
+
+  const midweekHref = getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) || liveStreamUrl || '/services'
 
   return (
     <main>
@@ -135,159 +145,125 @@ export default function Home() {
           <Carousel images={beforeServicesCarouselImages} />
         </section>
       </ScrollReveal>
-
-      {/* Section 1: Wednesday Online Prayers – video or image */}
-      <ScrollReveal direction="left">
-        <section className={styles.bannerSection}>
-          <div className={getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) ? styles.bannerVideo : styles.bannerImage}>
-            {getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) ? (
-              <iframe
-                src={getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL)}
-                title="Wednesday Online Prayers"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <img src="/churchpraying.jpg" alt="Wednesday online prayers" />
-            )}
+      {[
+        {
+          id: 'midweek',
+          badge: 'Midweek',
+          title: 'Wednesday Online Prayers',
+          text: 'Join us every Wednesday for a time of corporate prayer and intercession. Connect online from wherever you are and experience the power of agreement in prayer.',
+          images: ['/churchpraying.jpg', '/midweekwednesday.jpeg', '/Morningprayers.jpg'],
+          primaryLabel: 'Join Wednesday Prayers ->',
+          primaryHref: midweekHref,
+          primaryExternal: midweekHref.startsWith('http'),
+          reverse: false,
+        },
+        {
+          id: 'weekly',
+          badge: 'Weekly',
+          title: 'Friday Night Service',
+          text: 'End your week in worship and the Word. Our Friday night gatherings are a time for refreshing, fellowship, and encountering God together.',
+          images: ['/midweekservicefriday.jpeg', '/praiseandworshipdancing.jpg', '/preachinghour.jpg'],
+          primaryLabel: 'View Times & Venue ->',
+          primaryHref: '/services',
+          reverse: true,
+        },
+        {
+          id: 'sunday',
+          badge: 'Sunday',
+          title: 'Sunday Worship & Word',
+          text: 'Bible Study, SB1 Service, Word Manifest, and Discipleship all in one place. Come as you are and experience a house of solutions, manifesting Christ.',
+          images: ['/sundayservices.jpeg', '/preachinghour.jpg', '/biblestudysundaymorning.jpeg'],
+          primaryLabel: 'Plan Your Visit ->',
+          primaryHref: '/services',
+          reverse: false,
+        },
+        {
+          id: 'connect',
+          badge: 'Connect',
+          title: 'Connect With Us & Give',
+          text: 'Stay connected through our online platforms. Your giving supports ministry, the building of our sanctuary, and outreach. Every gift makes a difference.',
+          images: ['/handstogether unity.jpg', '/onlineconnectthurday.jpeg', '/latestoutreach.jpeg'],
+          primaryLabel: 'Give & Support ->',
+          primaryHref: '/give',
+          secondaryLabel: 'Contact Us',
+          secondaryHref: '/contact',
+          reverse: true,
+        },
+        {
+          id: 'prayer',
+          badge: 'Prayer',
+          title: 'Prayer From the Heart',
+          text: 'When we pray from the heart, God hears. Join a community that values genuine, Spirit-led prayer and intercession for one another and our nation.',
+          images: ['/fromheartprayesr.jpg', '/churchpraying.jpg', '/womanpraying.jpg'],
+          primaryLabel: 'Join in Prayer ->',
+          primaryHref: '/services',
+          reverse: true,
+        },
+        {
+          id: 'devotion',
+          badge: 'Devotion',
+          title: 'Personal & Corporate Devotion',
+          text: 'Whether alone or together, our church is built on a foundation of prayer. Find space for personal devotion and corporate prayer throughout the week.',
+          images: ['/womanpraying.jpg', '/manpraying.jpg', '/Morningprayers.jpg'],
+          primaryLabel: 'Find a Service ->',
+          primaryHref: '/services',
+          reverse: false,
+        },
+        {
+          id: 'mission',
+          badge: 'Mission',
+          title: 'Mission & Outreach',
+          text: 'We take the Gospel beyond our walls. Through outreach, evangelism, and community impact, we are manifesting Christ in Kitengela and beyond.',
+          images: ['/latestoutreach.jpeg', '/latestoutrach.jpeg', '/mission and vission.jpeg'],
+          primaryLabel: 'Our Mission ->',
+          primaryHref: '/about',
+          reverse: true,
+        },
+      ].map((section, sectionIdx) => {
+        const imageIndex = sectionTick % section.images.length
+        return (
+          <div key={section.id}>
+            <ScrollReveal direction={section.reverse ? 'right' : 'left'}>
+              <section className={`${styles.storySection} ${section.reverse ? styles.storySectionReverse : ''}`}>
+                <div className={styles.storyBackgroundLayer}>
+                  {section.images.map((image, idx) => (
+                    <img
+                      key={`${section.id}-${image}`}
+                      src={image}
+                      alt={section.title}
+                      loading={sectionIdx === 0 && idx === imageIndex ? 'eager' : 'lazy'}
+                      decoding="async"
+                      fetchPriority={sectionIdx === 0 && idx === imageIndex ? 'high' : 'low'}
+                      className={`${styles.storyBackgroundImage} ${idx === imageIndex ? styles.storyBackgroundImageActive : ''}`}
+                    />
+                  ))}
+                </div>
+                <div className={styles.storyOverlay} />
+                <div className={styles.storyContent}>
+                  <span className={styles.bannerBadge}>{section.badge}</span>
+                  <h2 className={styles.bannerTitle}>{section.title}</h2>
+                  <p className={styles.bannerText}>{section.text}</p>
+                  {section.primaryExternal ? (
+                    <a href={section.primaryHref} target="_blank" rel="noopener noreferrer" className={styles.bannerCta}>
+                      {section.primaryLabel}
+                    </a>
+                  ) : (
+                    <Link to={section.primaryHref} className={styles.bannerCta}>
+                      {section.primaryLabel}
+                    </Link>
+                  )}
+                  {section.secondaryHref && section.secondaryLabel && (
+                    <Link to={section.secondaryHref} className={`${styles.bannerCta} ${styles.outline}`} style={{ marginLeft: '0.75rem' }}>
+                      {section.secondaryLabel}
+                    </Link>
+                  )}
+                </div>
+              </section>
+            </ScrollReveal>
+            {sectionIdx < 6 && <div className={styles.storyGap} />}
           </div>
-          <div className={styles.bannerContent}>
-            <span className={styles.bannerBadge}>Midweek</span>
-            <h2 className={styles.bannerTitle}>Wednesday Online Prayers</h2>
-            <p className={styles.bannerText}>
-              Join us every Wednesday for a time of corporate prayer and intercession. Connect online from wherever you are and experience the power of agreement in prayer.
-            </p>
-            <a
-              href={getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) || liveStreamUrl || '/services'}
-              target={getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) || liveStreamUrl ? '_blank' : undefined}
-              rel={getWednesdayVideoEmbedUrl(WEDNESDAY_PRAYER_VIDEO_URL) || liveStreamUrl ? 'noopener noreferrer' : undefined}
-              className={styles.bannerCta}
-            >
-              Join Wednesday Prayers →
-            </a>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      {/* Section 2: Friday Nights */}
-      <ScrollReveal direction="right">
-        <section className={`${styles.bannerSection} ${styles.reverse}`}>
-          <div className={styles.bannerImage}>
-            <img src="/praiseandworshipdancing.jpg" alt="Friday night service" />
-          </div>
-          <div className={styles.bannerContent}>
-            <span className={styles.bannerBadge}>Weekly</span>
-            <h2 className={styles.bannerTitle}>Friday Night Service</h2>
-            <p className={styles.bannerText}>
-              End your week in worship and the Word. Our Friday night gatherings are a time for refreshing, fellowship, and encountering God together.
-            </p>
-            <Link to="/services" className={styles.bannerCta}>View Times & Venue →</Link>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      {/* Section 3: Sunday Worship */}
-      <ScrollReveal direction="left">
-        <section className={styles.bannerSection}>
-          <div className={styles.bannerImage}>
-            <img src="/preachinghour.jpg" alt="Sunday worship" />
-          </div>
-          <div className={styles.bannerContent}>
-            <span className={styles.bannerBadge}>Sunday</span>
-            <h2 className={styles.bannerTitle}>Sunday Worship & Word</h2>
-            <p className={styles.bannerText}>
-              Bible Study, SB1 Service, Word Manifest, and Discipleship—all in one place. Come as you are and experience a house of solutions, manifesting Christ.
-            </p>
-            <Link to="/services" className={styles.bannerCta}>Plan Your Visit →</Link>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      {/* Section 4: Connect & Give */}
-      <ScrollReveal direction="right">
-        <section className={`${styles.bannerSection} ${styles.reverse}`}>
-          <div className={styles.bannerImage}>
-            <img src="/handstogether%20unity.jpg" alt="Connect and give" />
-          </div>
-          <div className={styles.bannerContent}>
-            <span className={styles.bannerBadge}>Connect</span>
-            <h2 className={styles.bannerTitle}>Connect With Us & Give</h2>
-            <p className={styles.bannerText}>
-              Stay connected through our online platforms. Your giving supports ministry, the building of our sanctuary, and outreach. Every gift makes a difference.
-            </p>
-            <Link to="/give" className={styles.bannerCta}>Give & Support →</Link>
-            <Link to="/contact" className={`${styles.bannerCta} ${styles.outline}`} style={{ marginLeft: '0.75rem' }}>Contact Us</Link>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      {/* Section 5: Bible Study */}
-      <ScrollReveal direction="left">
-        <section className={styles.bannerSection}>
-          <div className={styles.bannerImage}>
-            <img src="/biblestudysundaymorning.jpeg" alt="Bible study" />
-          </div>
-          <div className={styles.bannerContent}>
-            <span className={styles.bannerBadge}>Sunday</span>
-            <h2 className={styles.bannerTitle}>Bible Study</h2>
-            <p className={styles.bannerText}>
-              Grow in the Word every Sunday morning. Our Bible study is a time for digging deeper into Scripture and applying truth to daily life.
-            </p>
-            <Link to="/services" className={styles.bannerCta}>View Schedule →</Link>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      {/* Section 6: From the Heart – Prayer */}
-      <ScrollReveal direction="right">
-        <section className={`${styles.bannerSection} ${styles.reverse}`}>
-          <div className={styles.bannerImage}>
-            <img src="/fromheartprayesr.jpg" alt="Prayer from the heart" />
-          </div>
-          <div className={styles.bannerContent}>
-            <span className={styles.bannerBadge}>Prayer</span>
-            <h2 className={styles.bannerTitle}>Prayer From the Heart</h2>
-            <p className={styles.bannerText}>
-              When we pray from the heart, God hears. Join a community that values genuine, Spirit-led prayer and intercession for one another and our nation.
-            </p>
-            <Link to="/services" className={styles.bannerCta}>Join in Prayer →</Link>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      {/* Section 7: Men & Women in Prayer */}
-      <ScrollReveal direction="left">
-        <section className={styles.bannerSection}>
-          <div className={styles.bannerImage}>
-            <img src="/womanpraying.jpg" alt="Prayer and devotion" />
-          </div>
-          <div className={styles.bannerContent}>
-            <span className={styles.bannerBadge}>Devotion</span>
-            <h2 className={styles.bannerTitle}>Personal & Corporate Devotion</h2>
-            <p className={styles.bannerText}>
-              Whether alone or together, our church is built on a foundation of prayer. Find space for personal devotion and corporate prayer throughout the week.
-            </p>
-            <Link to="/services" className={styles.bannerCta}>Find a Service →</Link>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      {/* Section 8: Mission & Outreach */}
-      <ScrollReveal direction="right">
-        <section className={`${styles.bannerSection} ${styles.reverse}`}>
-          <div className={styles.bannerImage}>
-            <img src="/latestoutreach.jpeg" alt="Outreach and mission" />
-          </div>
-          <div className={styles.bannerContent}>
-            <span className={styles.bannerBadge}>Mission</span>
-            <h2 className={styles.bannerTitle}>Mission & Outreach</h2>
-            <p className={styles.bannerText}>
-              We take the Gospel beyond our walls. Through outreach, evangelism, and community impact, we are manifesting Christ in Kitengela and beyond.
-            </p>
-            <Link to="/about" className={styles.bannerCta}>Our Mission →</Link>
-          </div>
-        </section>
-      </ScrollReveal>
+        )
+      })}
 
       {loading ? <div className={styles.loadingText}>Loading services...</div> : <ScrollReveal direction="left"><Services services={services} /></ScrollReveal>}
       <ScrollReveal direction="right"><CoreValues /></ScrollReveal>
@@ -295,3 +271,4 @@ export default function Home() {
     </main>
   )
 }
+

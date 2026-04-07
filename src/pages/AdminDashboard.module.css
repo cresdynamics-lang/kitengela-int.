@@ -82,6 +82,15 @@
   padding: 2rem;
 }
 
+.tabLoading {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4b5563;
+  font-weight: 600;
+}
+
 .loading {
   display: flex;
   align-items: center;

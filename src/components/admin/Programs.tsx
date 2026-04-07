@@ -62,7 +62,7 @@ export default function Programs() {
     try {
       const programData = {
         ...formData,
-        contacts: formData.contacts.split(',').map(c => c.trim()).filter(c => c),
+        contacts: JSON.stringify(formData.contacts.split(',').map(c => c.trim()).filter(c => c)),
         posterImageUrl: formData.posterImageUrl || null,
         description: formData.description || null,
       }
@@ -81,13 +81,20 @@ export default function Programs() {
   }
 
   const handleEdit = (program: Program) => {
+    const contacts = (() => {
+      try {
+        return JSON.parse(program.contacts).join(', ')
+      } catch {
+        return ''
+      }
+    })()
     setFormData({
       title: program.title,
       day: program.day,
       startTime: program.startTime,
       endTime: program.endTime,
       venue: program.venue,
-      contacts: program.contacts.join(', '),
+      contacts: contacts,
       description: program.description || '',
       posterImageUrl: program.posterImageUrl || '',
       isActive: program.isActive,

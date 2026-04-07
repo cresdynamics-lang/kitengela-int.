@@ -16,8 +16,18 @@ export default function AdminLogin() {
     try {
       const response = await adminApi.login(formData.username, formData.password)
       if (response.success && response.data) {
-        localStorage.setItem('adminToken', response.data.token)
+        const token = response.data.token
+        localStorage.setItem('adminToken', token)
         localStorage.setItem('admin', JSON.stringify(response.data.admin))
+
+        // Warm commonly opened admin tabs while navigating.
+        void Promise.allSettled([
+          adminApi.getSermons(token),
+          adminApi.getPrograms(token),
+          adminApi.getUpdateLinks(token),
+          adminApi.getLive(token),
+        ])
+
         navigate('/admin/dashboard')
       } else {
         setError((response as { error?: string }).error || 'Login failed')
@@ -40,13 +50,29 @@ export default function AdminLogin() {
           {error && <div className={styles.error}>{error}</div>}
           <div className={styles.inputGroup}>
             <label htmlFor="username">Username or Email</label>
-            <input type="text" id="username" value={formData.username} onChange={(e) => setFormData({ ...formData, username: e.target.value })} required disabled={loading} />
+            <input
+              type="text"
+              id="username"
+              value={formData.username}
+              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+              required
+              disabled={loading}
+            />
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} required disabled={loading} />
+            <input
+              type="password"
+              id="password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              required
+              disabled={loading}
+            />
           </div>
-          <button type="submit" className={styles.submitButton} disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
+          <button type="submit" className={styles.submitButton} disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
       </div>
     </div>

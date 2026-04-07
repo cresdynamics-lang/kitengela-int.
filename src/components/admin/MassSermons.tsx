@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import styles from './admin.module.css'
 import { adminApi } from '@/lib/api'
+import { uploadFile } from '@/lib/supabase'
 
 interface MassSermon {
   id: string
@@ -80,7 +81,7 @@ export default function MassSermons() {
     }
   }
 
-  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -94,16 +95,18 @@ export default function MassSermons() {
       return
     }
 
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      const base64String = reader.result as string
-      setFormData({ ...formData, thumbnail_url: base64String })
-      setImagePreview(base64String)
+    try {
+      // Upload to Supabase Storage
+      const fileName = `sermon-thumbnails/${Date.now()}-${file.name}`
+      const publicUrl = await uploadFile('images', file, fileName)
+
+      setFormData({ ...formData, thumbnail_url: publicUrl })
+      setImagePreview(publicUrl)
+    } catch (error) {
+      console.error('Upload failed:', error)
+      const message = error instanceof Error ? error.message : 'Failed to upload image. Please try again.'
+      alert(message)
     }
-    reader.onerror = () => {
-      alert('Error reading image file')
-    }
-    reader.readAsDataURL(file)
   }
 
   const handleImageUrlChange = (url: string) => {

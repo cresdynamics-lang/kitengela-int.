@@ -158,3 +158,78 @@ model Admin {
 
   @@map("admins")
 }
+
+model LiveService {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  isLive      Boolean  @default(false) @map("is_live")
+  platform    String?  // youtube, facebook, googlemeet, zoom
+  youtubeUrl  String?  @map("youtube_url")
+  facebookUrl String?  @map("facebook_url")
+  googleMeetUrl String? @map("google_meet_url")
+  zoomUrl     String?  @map("zoom_url")
+  scheduledAt DateTime? @map("scheduled_at")
+  startedAt   DateTime? @map("started_at")
+  endedAt     DateTime? @map("ended_at")
+  thumbnailUrl String? @map("thumbnail_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  updatedBy   String?  @map("updated_by")
+
+  @@map("live_services")
+  @@index([isLive, scheduledAt])
+}
+
+model Prayer {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  status      String   @default("scheduled") // scheduled, active, completed
+  isLive      Boolean  @default(false) @map("is_live")
+  joinUrl     String?  @map("join_url")
+  audioUrl    String?  @map("audio_url")
+  platform    String?  // zoom, googlemeet, custom
+  scheduledAt DateTime? @map("scheduled_at")
+  startedAt   DateTime? @map("started_at")
+  endedAt     DateTime? @map("ended_at")
+  participantCount Int @default(0) @map("participant_count")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  updatedBy   String?  @map("updated_by")
+
+  @@map("prayers")
+  @@index([status, scheduledAt])
+}
+
+model GalleryImage {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  imageUrl    String   @map("image_url")
+  thumbnailUrl String? @map("thumbnail_url")
+  category    String   @default("general")
+  orderIndex  Int      @default(0) @map("order_index")
+  isPublished Boolean  @default(true) @map("is_published")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  uploadedBy  String?  @map("uploaded_by")
+
+  @@map("gallery_images")
+  @@index([category, isPublished, orderIndex])
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  authorName  String   @map("author_name")
+  title       String?
+  message     String
+  imageUrl    String?  @map("image_url")
+  isPublished Boolean  @default(false) @map("is_published")
+  orderIndex  Int      @default(0) @map("order_index")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("testimonials")
+  @@index([isPublished, orderIndex])
+}

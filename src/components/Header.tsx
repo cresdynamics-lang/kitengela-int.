@@ -13,20 +13,14 @@ export default function Header() {
       try {
         const response = await publicApi.getLive()
         if (response.success && response.data) {
-          const data = response.data as { 
+          const data = response.data as {
             isLive?: boolean
             youtubeLiveUrl?: string | null
             facebookLiveUrl?: string | null
             googleMeetUrl?: string | null
           }
           setIsLive(data.isLive || false)
-          // Priority: YouTube > Facebook > Google Meet
-          setLiveStreamUrl(
-            data.youtubeLiveUrl || 
-            data.facebookLiveUrl || 
-            data.googleMeetUrl || 
-            null
-          )
+          setLiveStreamUrl(data.youtubeLiveUrl || data.facebookLiveUrl || data.googleMeetUrl || null)
         }
       } catch (error) {
         console.error('Error fetching live stream:', error)
@@ -49,7 +43,7 @@ export default function Header() {
   return (
     <>
       {isMenuOpen && (
-        <div 
+        <div
           className={styles.overlay}
           onClick={closeMenu}
           aria-hidden="true"
@@ -72,9 +66,8 @@ export default function Header() {
               </div>
             </Link>
           </div>
-          
+
           <div className={styles.mobileActions}>
-            {/* Red "Join Us Live" button - visible on small screens, left of hamburger */}
             {liveStreamUrl && (
               <a
                 href={liveStreamUrl}
@@ -86,7 +79,7 @@ export default function Header() {
                 Join Us Live
               </a>
             )}
-            <button 
+            <button
               className={`${styles.hamburger} ${isMenuOpen ? styles.hamburgerOpen : ''}`}
               onClick={toggleMenu}
               aria-label="Toggle menu"

@@ -34,9 +34,16 @@ export default function ContactSection() {
       try {
         const res = await publicApi.getSite()
         if (res.success && res.data) {
-          const s = res.data as { phoneNumbers?: string[]; email?: string | null; locationText?: string; facebookUrl?: string | null; instagramUrl?: string | null; youtubeUrl?: string | null }
+          const s = res.data as { phoneNumbers?: string; email?: string | null; locationText?: string; facebookUrl?: string | null; instagramUrl?: string | null; youtubeUrl?: string | null }
+          const phoneNumbers = (() => {
+            try {
+              return s.phoneNumbers ? JSON.parse(s.phoneNumbers) : FALLBACK.phoneNumbers
+            } catch {
+              return FALLBACK.phoneNumbers
+            }
+          })()
           setContactInfo({
-            phoneNumbers: s.phoneNumbers?.length ? s.phoneNumbers : FALLBACK.phoneNumbers,
+            phoneNumbers: phoneNumbers.length ? phoneNumbers : FALLBACK.phoneNumbers,
             email: s.email || FALLBACK.email,
             location: { city: 'Kitengela', address: s.locationText || FALLBACK.location.address },
             socialMedia: {
