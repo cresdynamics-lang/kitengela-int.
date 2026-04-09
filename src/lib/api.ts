@@ -2,25 +2,7 @@ function isLocalHostname(hostname: string) {
   return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1'
 }
 
-function resolveApiUrl() {
-  const raw = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || ''
-  const trimmed = raw.trim()
-  if (!trimmed) return ''
-
-  try {
-    const parsed = new URL(trimmed)
-    if (typeof window !== 'undefined') {
-      const appIsLocal = isLocalHostname(window.location.hostname)
-      const apiIsLocal = isLocalHostname(parsed.hostname)
-      if (!appIsLocal && apiIsLocal) return ''
-    }
-    return trimmed.replace(/\/+$/, '')
-  } catch {
-    return trimmed.replace(/\/+$/, '')
-  }
-}
-
-const API_URL = resolveApiUrl() || 'http://localhost:3001'
+const API_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || '/api'
 const PUBLIC_CACHE_TTL_MS = 30_000
 const ADMIN_CACHE_TTL_MS = 5 * 60_000
 const REQUEST_TIMEOUT_MS = 25_000
@@ -200,13 +182,19 @@ async function fetchApiWithAuth<T>(endpoint: string, token: string, options: Req
       if (cached) return cached
     }
 
+    const isFormData = options.body instanceof FormData
+    const headers: Record<string, string> = {
+      'Authorization': `Bearer ${token}`,
+      ...((options.headers as Record<string, string>) || {}),
+    }
+
+    if (!isFormData && !headers['Content-Type']) {
+      headers['Content-Type'] = 'application/json'
+    }
+
     const response = await fetchWithTimeout(`${API_URL}${endpoint}`, {
       ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-        ...options.headers,
-      },
+      headers,
     })
     const contentType = response.headers.get('content-type')
     if (!response.ok) {
