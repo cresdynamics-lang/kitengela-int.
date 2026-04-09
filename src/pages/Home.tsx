@@ -212,7 +212,11 @@ export default function Home() {
           badge: 'Devotion',
           title: 'Personal & Corporate Devotion',
           text: 'Whether alone or together, our church is built on a foundation of prayer. Find space for personal devotion and corporate prayer throughout the week.',
-          images: ['/WhatsApp Image 2026-04-08 at 13.57.56 (2).jpeg', '/manpraying.jpg', '/Morningprayers.jpg'],
+          images: [
+            '/WhatsApp Image 2026-04-08 at 13.58.00.jpeg',
+            '/WhatsApp Image 2026-04-08 at 13.57.59 (2).jpeg',
+            '/WhatsApp Image 2026-04-08 at 13.57.58 (2).jpeg'
+          ],
           primaryLabel: 'Find a Service ->',
           primaryHref: '/services',
           reverse: false,
