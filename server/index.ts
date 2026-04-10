@@ -23,27 +23,27 @@ app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ limit: '10mb', extended: true }))
 
 // Request logging and path normalization
-app.use((req, res, next) => {
-  const originalUrl = req.url
+app.use((_req, res, next) => {
+  const originalUrl = _req.url
   
   // Normalization: Ensure req.url starts with /api if it's missing (Vercel mapping)
-  if (!req.url.startsWith('/api') && !req.url.startsWith('/uploads')) {
-    req.url = '/api' + (req.url.startsWith('/') ? '' : '/') + req.url
+  if (!_req.url.startsWith('/api') && !_req.url.startsWith('/uploads')) {
+    _req.url = '/api' + (_req.url.startsWith('/') ? '' : '/') + _req.url
   }
 
   // Robustness: Handle double /api/api
-  if (req.url.startsWith('/api/api/')) {
-    req.url = req.url.slice(4)
+  if (_req.url.startsWith('/api/api/')) {
+    _req.url = _req.url.slice(4)
   }
   
   if (process.env.NODE_ENV !== 'production') {
-    console.log(`${req.method} ${originalUrl} -> ${req.url}`)
+    console.log(`${_req.method} ${originalUrl} -> ${_req.url}`)
   }
   next()
 })
 
 // Explicit OPTIONS handler for CORS preflight
-app.options('*', (req, res) => {
+app.options('*', (_req, res) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
@@ -57,21 +57,21 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (_req, _file, cb) => {
     cb(null, uploadsDir)
   },
-  filename: (req, file, cb) => {
+  filename: (_req, _file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+    cb(null, _file.fieldname + '-' + uniqueSuffix + path.extname(_file.originalname))
   }
 })
 
 const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
+  fileFilter: (_req, _file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase())
+    const extname = allowedTypes.test(path.extname(_file.originalname).toLowerCase())
     cb(null, extname)
   }
 })
