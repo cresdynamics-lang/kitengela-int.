@@ -167,6 +167,7 @@ export default function PhotoManager() {
 
       <div className={styles.uploadSection}>
         <div className={styles.uploadArea}>
+          <input
             id="photo-input"
             type="file"
             accept="image/*"

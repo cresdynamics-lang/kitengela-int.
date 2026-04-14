@@ -19,6 +19,8 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
+    const fetchLiveData = async () => {
+      try {
         const response = await publicApi.getLive()
         if (response.success && response.data) {
           setLiveData(response.data)
@@ -133,5 +135,6 @@ export default function Header() {
           onClose={() => setShowPlayer(false)} 
         />
       )}
+    </>
   )
 }
