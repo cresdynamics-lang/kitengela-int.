@@ -23,7 +23,7 @@ app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ limit: '10mb', extended: true }))
 
 // Request logging and path normalization
-app.use((_req, res, next) => {
+app.use((_req, _res, next) => {
   const originalUrl = _req.url
   
   // Normalization: Ensure req.url starts with /api if it's missing (Vercel mapping)
@@ -135,9 +135,9 @@ async function dbQuery<T>(table: string, options: {
 }
 
 async function dbInsert<T>(table: string, record: Record<string, any>): Promise<T> {
-  const { data, error } = await getSupabaseAdmin()
-    .from(table)
-    .insert(record as any)
+  const { data, error } = await (getSupabaseAdmin()
+    .from(table) as any)
+    .insert(record)
     .select()
     .single()
   if (error) throw new Error(error.message)
@@ -145,9 +145,9 @@ async function dbInsert<T>(table: string, record: Record<string, any>): Promise<
 }
 
 async function dbUpdate<T>(table: string, id: string, record: Record<string, any>): Promise<T> {
-  const { data, error } = await getSupabaseAdmin()
-    .from(table)
-    .update(record as any)
+  const { data, error } = await (getSupabaseAdmin()
+    .from(table) as any)
+    .update(record)
     .eq('id', id)
     .select()
     .single()
@@ -204,7 +204,7 @@ app.get('/api/debug', async (_req, res) => {
     SUPABASE_SERVICE_ROLE_KEY: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
     SUPABASE_ANON_KEY: !!process.env.SUPABASE_ANON_KEY,
     DATABASE_URL: !!process.env.DATABASE_URL,
-    isSupabaseConfigured: isSupabaseConfigured(),
+    isSupabaseConfigured: isSupabaseConfigured,
     nodeEnv: process.env.NODE_ENV,
     timestamp: new Date().toISOString()
   }
