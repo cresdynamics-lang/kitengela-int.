@@ -31,11 +31,11 @@ const churchActivitiesCarouselImages = [
   { id: 1, title: "Sunday Worship Experience", image: "/sunday-services.jpeg", description: "Join us every Sunday for powerful worship and life-changing messages" },
   { id: 2, title: "Bible Study Sessions", image: "/bible-study.jpeg", description: "Deep dive into God's Word and grow in your understanding of Scripture" },
   { id: 3, title: "Corporate Prayer", image: "/church-praying.jpg", description: "Experience the power of corporate prayer and intercession" },
-  { id: 4, title: "Praise & Worship", image: "/praise-worship.jpg", description: "Celebrate God's goodness through vibrant praise and worship" },
-  { id: 5, title: "Community Service", image: "/whatsapp-18.jpeg", description: "Serving our community with love and compassion" },
-  { id: 6, title: "Spiritual Growth", image: "/whatsapp-19.jpeg", description: "Growing together in faith and spiritual maturity" },
-  { id: 7, title: "Midweek Services", image: "/midweek-fri.jpeg", description: "Midweek spiritual refreshment and fellowship" },
-  { id: 8, title: "Online Connection", image: "/online-connect.jpeg", description: "Connect with us online for prayer and fellowship" }
+  { id: 4, title: "Online Connect Fellowship", image: "/online-connect-poster.jpeg", description: "Join our Online Connect Fellowship every Thursday from 8:30 PM - 9:30 PM" },
+  { id: 5, title: "Men's Fellowship", image: "/mens-fellowship-poster.jpeg", description: "Men gathering together to reclaim the divine mandate of manhood" },
+  { id: 6, title: "Our Core Values", image: "/core-values-poster.jpeg", description: "Prayer, Stewardship, Holiness, Advocacy, and Unity form our foundation" },
+  { id: 7, title: "Praise & Worship", image: "/praise-worship.jpg", description: "Celebrate God's goodness through vibrant praise and worship" },
+  { id: 8, title: "Midweek Refreshment", image: "/midweek-fri.jpeg", description: "Midweek spiritual refreshment and fellowship" }
 ]
 
 export default function Services() {
@@ -109,10 +109,10 @@ export default function Services() {
             linkUrl: null,
           },
           {
-            id: 'wednesday',
-            title: 'Wednesday Online Prayers',
-            description: 'Midweek online prayer gathering to seek God together.',
-            thumbnailUrl: '/midweek-wed.jpeg',
+            id: 'thursday',
+            title: 'Thursday Online Connect',
+            description: 'Online Connect Fellowship every Thursday 8:30 PM - 9:30 PM on Google Meet.',
+            thumbnailUrl: '/online-connect-poster.jpeg',
             linkUrl: null,
           },
           {
