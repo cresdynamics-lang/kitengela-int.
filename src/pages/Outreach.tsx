@@ -7,14 +7,14 @@ import Carousel from '@/components/Carousel'
 import styles from './Outreach.module.css'
 
 const outreachCarouselImages = [
-  { id: 1, title: "Community Outreach", image: "/latestoutreach.jpeg", description: "Reaching out to our community with the love of Christ and practical help" },
-  { id: 2, title: "Mission Work", image: "/latestoutrach.jpeg", description: "Taking the Gospel beyond our walls to transform lives" },
-  { id: 3, title: "Mission & Vision", image: "/mission and vission.jpeg", description: "Fulfilling our mandate to manifest Christ in Kitengela and beyond" },
-  { id: 4, title: "Unity in Service", image: "/handstogether unity.jpg", description: "Working together in unity to serve our community" },
-  { id: 5, title: "Heart for Mission", image: "/fromheartprayesr.jpg", description: "A heart committed to prayer and outreach" },
-  { id: 6, title: "Community Impact", image: "/WhatsApp Image 2026-04-08 at 13.57.54 (1).jpeg", description: "Making a positive impact in our community" },
-  { id: 7, title: "Prayer & Service", image: "/WhatsApp Image 2026-04-08 at 13.57.56 (2).jpeg", description: "Combining prayer with practical service" },
-  { id: 8, title: "Transforming Lives", image: "/WhatsApp Image 2026-04-08 at 13.57.57.jpeg", description: "Transforming lives through the Gospel and service" }
+  { id: 1, title: "Community Outreach", image: "/outreach-1.jpeg", description: "Reaching out to our community with the love of Christ and practical help" },
+  { id: 2, title: "Mission Work", image: "/outreach-2.jpeg", description: "Taking the Gospel beyond our walls to transform lives" },
+  { id: 3, title: "Mission & Vision", image: "/mission-vision.jpeg", description: "Fulfilling our mandate to manifest Christ in Kitengela and beyond" },
+  { id: 4, title: "Unity in Service", image: "/unity.jpg", description: "Working together in unity to serve our community" },
+  { id: 5, title: "Heart for Mission", image: "/prayer-heart.jpg", description: "A heart committed to prayer and outreach" },
+  { id: 6, title: "Community Impact", image: "/whatsapp-4.jpeg", description: "Making a positive impact in our community" },
+  { id: 7, title: "Prayer & Service", image: "/whatsapp-9.jpeg", description: "Combining prayer with practical service" },
+  { id: 8, title: "Transforming Lives", image: "/whatsapp-11.jpeg", description: "Transforming lives through the Gospel and service" }
 ]
 
 const outreachActivities = [
@@ -22,37 +22,37 @@ const outreachActivities = [
     id: 1,
     title: "Community Food Drives",
     description: "Regular food distribution programs to support needy families in Kitengela",
-    image: "/WhatsApp Image 2026-04-08 at 13.57.45.jpeg"
+    image: "/whatsapp-1.jpeg"
   },
   {
     id: 2,
     title: "Medical Camps",
     description: "Free medical check-ups and health services for the community",
-    image: "/WhatsApp Image 2026-04-08 at 13.57.46.jpeg"
+    image: "/whatsapp-2.jpeg"
   },
   {
     id: 3,
     title: "Youth Mentorship",
     description: "Mentoring young people to discover their purpose and potential",
-    image: "/WhatsApp Image 2026-04-08 at 13.57.53.jpeg"
+    image: "/whatsapp-3.jpeg"
   },
   {
     id: 4,
     title: "Prayer Walks",
     description: "Community prayer walks covering every street in Kitengela",
-    image: "/WhatsApp Image 2026-04-08 at 13.57.54.jpeg"
+    image: "/whatsapp-5.jpeg"
   },
   {
     id: 5,
     title: "School Support",
     description: "Supporting local schools with educational materials and mentorship",
-    image: "/WhatsApp Image 2026-04-08 at 13.57.55.jpeg"
+    image: "/whatsapp-7.jpeg"
   },
   {
     id: 6,
     title: "Family Counseling",
     description: "Providing biblical counseling and support for families",
-    image: "/WhatsApp Image 2026-04-08 at 13.57.56.jpeg"
+    image: "/whatsapp-10.jpeg"
   }
 ]
 
@@ -63,7 +63,7 @@ export default function Outreach() {
       <PageHeader 
         title="Outreach & Mission" 
         subtitle="Love Beyond Our Walls"
-        backgroundImage="/latestoutreach.jpeg"
+        backgroundImage="/outreach-1.jpeg"
       />
       <div className={styles.container}>
         <ScrollReveal direction="right">

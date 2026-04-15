@@ -27,14 +27,14 @@ interface ServiceCard {
 }
 
 const churchActivitiesCarouselImages = [
-  { id: 1, title: "Sunday Worship Experience", image: "/sundayservices.jpeg", description: "Join us every Sunday for powerful worship and life-changing messages" },
-  { id: 2, title: "Bible Study Sessions", image: "/biblestudysundaymorning.jpeg", description: "Deep dive into God's Word and grow in your understanding of Scripture" },
-  { id: 3, title: "Corporate Prayer", image: "/churchpraying.jpg", description: "Experience the power of corporate prayer and intercession" },
-  { id: 4, title: "Praise & Worship", image: "/praiseandworshipdancing.jpg", description: "Celebrate God's goodness through vibrant praise and worship" },
-  { id: 5, title: "Community Service", image: "/WhatsApp Image 2026-04-08 at 13.57.59 (2).jpeg", description: "Serving our community with love and compassion" },
-  { id: 6, title: "Spiritual Growth", image: "/WhatsApp Image 2026-04-08 at 13.58.00.jpeg", description: "Growing together in faith and spiritual maturity" },
-  { id: 7, title: "Midweek Services", image: "/midweekservicefriday.jpeg", description: "Midweek spiritual refreshment and fellowship" },
-  { id: 8, title: "Online Connection", image: "/onlineconnectthurday.jpeg", description: "Connect with us online for prayer and fellowship" }
+  { id: 1, title: "Sunday Worship Experience", image: "/sunday-services.jpeg", description: "Join us every Sunday for powerful worship and life-changing messages" },
+  { id: 2, title: "Bible Study Sessions", image: "/bible-study.jpeg", description: "Deep dive into God's Word and grow in your understanding of Scripture" },
+  { id: 3, title: "Corporate Prayer", image: "/church-praying.jpg", description: "Experience the power of corporate prayer and intercession" },
+  { id: 4, title: "Praise & Worship", image: "/praise-worship.jpg", description: "Celebrate God's goodness through vibrant praise and worship" },
+  { id: 5, title: "Community Service", image: "/whatsapp-18.jpeg", description: "Serving our community with love and compassion" },
+  { id: 6, title: "Spiritual Growth", image: "/whatsapp-19.jpeg", description: "Growing together in faith and spiritual maturity" },
+  { id: 7, title: "Midweek Services", image: "/midweek-fri.jpeg", description: "Midweek spiritual refreshment and fellowship" },
+  { id: 8, title: "Online Connection", image: "/online-connect.jpeg", description: "Connect with us online for prayer and fellowship" }
 ]
 
 export default function Services() {
@@ -76,36 +76,35 @@ export default function Services() {
 
   const daysOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-  const effectiveServiceCards: ServiceCard[] =
-    serviceCards.length > 0
+  const effectiveServiceCards: ServiceCard[] = serviceCards.length > 0
       ? serviceCards
       : [
           {
             id: 'sunday',
             title: 'Sunday Worship Service',
             description: 'Main Sunday celebration service with worship, Word, and ministry.',
-            thumbnailUrl: '/sundayservices.jpeg',
+            thumbnailUrl: '/sunday-services.jpeg',
             linkUrl: null,
           },
           {
             id: 'wednesday',
             title: 'Wednesday Online Prayers',
             description: 'Midweek online prayer gathering to seek God together.',
-            thumbnailUrl: '/midweekwednesday.jpeg',
+            thumbnailUrl: '/midweek-wed.jpeg',
             linkUrl: null,
           },
           {
             id: 'friday',
             title: 'Friday Night Service',
             description: 'Friday night encounter in worship, intercession, and the Word.',
-            thumbnailUrl: '/midweekservicefriday.jpeg',
+            thumbnailUrl: '/midweek-fri.jpeg',
             linkUrl: null,
           },
           {
             id: 'biblestudy',
             title: 'Sunday Bible Study',
             description: 'Grow deeper in Scripture before the main Sunday services.',
-            thumbnailUrl: '/biblestudysundaymorning.jpeg',
+            thumbnailUrl: '/bible-study.jpeg',
             linkUrl: null,
           },
         ]
@@ -116,7 +115,7 @@ export default function Services() {
       <PageHeader 
         title="Services & Programs" 
         subtitle="Spiritual Refreshment for Your Week"
-        backgroundImage="/sundayservices.jpeg"
+        backgroundImage="/sunday-services.jpeg"
         hideDivider={true}
       />
       <div className={styles.container}>

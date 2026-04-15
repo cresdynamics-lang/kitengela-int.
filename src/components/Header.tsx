@@ -47,7 +47,7 @@ export default function Header() {
           <div className={styles.logoContainer}>
             <Link to="/" className={styles.logoLink} onClick={closeMenu}>
               <img
-                src="/logo/chuurchlogo.jpeg"
+                src="/logo/church-logo.jpeg"
                 alt="VOSH Church Logo"
                 className={styles.logo}
               />

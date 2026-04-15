@@ -48,7 +48,7 @@ export default function About() {
       <PageHeader 
         title="Who We Are" 
         subtitle={siteInfo.churchName}
-        backgroundImage="/biblestudysundaymorning.jpeg"
+        backgroundImage="/bible-study.jpeg"
         hideDivider={true}
       />
 
@@ -57,7 +57,7 @@ export default function About() {
         <div className={styles.mvGrid}>
           <ScrollReveal direction="left">
             <div className={styles.mvCard}>
-              <div className={styles.cardImage} style={{ backgroundImage: 'url("/mission and vission.jpeg")' }} />
+              <div className={styles.cardImage} style={{ backgroundImage: 'url("/mission-vision.jpeg")' }} />
               <div className={styles.cardOverlay} />
               <div className={styles.cardContent}>
                 <span className={styles.cardBadge}>Our Mission</span>
@@ -69,7 +69,7 @@ export default function About() {
 
           <ScrollReveal direction="right">
             <div className={styles.mvCard}>
-              <div className={styles.cardImage} style={{ backgroundImage: 'url("/churchcorevalues.jpeg")' }} />
+              <div className={styles.cardImage} style={{ backgroundImage: 'url("/core-values.jpeg")' }} />
               <div className={styles.cardOverlay} />
               <div className={styles.cardContent}>
                 <span className={styles.cardBadge}>Our Vision</span>

@@ -13,31 +13,31 @@ import styles from './Home.module.css'
 const heroImages = [
   { id: 0, title: "Welcome to VOSH Church International", image: "/Carousel1.jpg", description: "Transforming lives through the pure Word and building strong faith for our community." },
   { id: 1, title: "Manifesting Christ in Our Community", image: "/Carousel2.jpg", description: "We are a House of Solutions, reaching out with love and power in Kitengela." },
-  { id: 2, title: "Experience Supernatural Worship", image: "/Carousell3.jpeg", description: "Join us this Sunday along Baraka Road for a time of refreshment and miracles." },
+  { id: 2, title: "Experience Supernatural Worship", image: "/carousel3.jpeg", description: "Join us this Sunday along Baraka Road for a time of refreshment and miracles." },
 ]
 
 const foundationImages = [
-  "/churchcorevalues.jpeg",
-  "/mission and vission.jpeg",
-  "/biblestudysundaymorning.jpeg"
+  "/core-values.jpeg",
+  "/mission-vision.jpeg",
+  "/bible-study.jpeg"
 ]
 
 const reachImages = [
-  "/latestoutreach.jpeg",
-  "/latestoutrach.jpeg",
-  "/WhatsApp Image 2026-04-08 at 13.57.54.jpeg"
+  "/outreach-1.jpeg",
+  "/outreach-2.jpeg",
+  "/whatsapp-5.jpeg"
 ]
 
 const prayerImages = [
-  "/churchpraying.jpg",
-  "/praiseandworshipdancing.jpg",
-  "/manpraying.jpg"
+  "/church-praying.jpg",
+  "/praise-worship.jpg",
+  "/man-praying.jpg"
 ]
 
 const givingImages = [
-  "/handstogether unity.jpg",
-  "/WhatsApp Image 2026-04-08 at 13.57.55.jpeg",
-  "/womanpraying.jpg"
+  "/unity.jpg",
+  "/whatsapp-7.jpeg",
+  "/woman-praying.jpg"
 ]
 
 // Universal Exclusion List: Images used across the entire site that should NOT be in the gallery
@@ -47,17 +47,17 @@ const SYSTEM_IMAGES = [
   ...reachImages,
   ...prayerImages,
   ...givingImages,
+  "/logo/church-logo.jpeg",
   "/logo/vosh-logo.png",
   "/logo/logo.png",
-  "/chuurchlogo.jpeg",
   "/Past.Nancy.Sai.jpeg",
   "/PastorNancySai.jpeg",
   "/Rev.Evans1.jpeg",
   "/Rev.Evans2.jpeg",
   "/Rev.Evans3.jpeg",
-  "/mission and vission.jpeg",
-  "/churchcorevalues.jpeg",
-  "/biblestudysundaymorning.jpeg"
+  "/mission-vision.jpeg",
+  "/core-values.jpeg",
+  "/bible-study.jpeg"
 ]
 
 const fadeUp = {
@@ -68,14 +68,14 @@ const fadeUp = {
 export default function Home() {
   const [services, setServices] = useState<any[]>([])
   const [galleryImages, setGalleryImages] = useState<string[]>([
-    "/WhatsApp Image 2026-04-08 at 13.57.54.jpeg",
-    "/WhatsApp Image 2026-04-08 at 13.57.55.jpeg",
-    "/WhatsApp Image 2026-04-08 at 13.57.56.jpeg",
-    "/latestoutreach.jpeg",
-    "/churchpraying.jpg",
-    "/manpraying.jpg",
-    "/sundayservices.jpeg",
-    "/preachinghour.jpg"
+    "/whatsapp-5.jpeg",
+    "/whatsapp-7.jpeg",
+    "/whatsapp-9.jpeg",
+    "/outreach-1.jpeg",
+    "/church-praying.jpg",
+    "/man-praying.jpg",
+    "/sunday-services.jpeg",
+    "/preaching.jpg"
   ])
   const [heroImagesState, setHeroImagesState] = useState<any[]>(heroImages)
   const [foundationImagesState, setFoundationImagesState] = useState<string[]>(foundationImages)
@@ -150,10 +150,10 @@ export default function Home() {
           } else {
             // Fallback to local WhatsApp images if DB is empty
             const localWhatsApp = [
-              "/WhatsApp Image 2026-04-08 at 13.57.57.jpeg",
-              "/WhatsApp Image 2026-04-08 at 13.57.58.jpeg",
-              "/WhatsApp Image 2026-04-08 at 13.58.00.jpeg",
-              "/WhatsApp Image 2026-04-08 at 13.57.59.jpeg"
+              "/whatsapp-11.jpeg",
+              "/whatsapp-14.jpeg",
+              "/whatsapp-19.jpeg",
+              "/whatsapp-18.jpeg"
             ].filter(img => !usedImagesSet.has(img) && !SYSTEM_IMAGES.includes(img))
             setGalleryImages(localWhatsApp)
           }
