@@ -16,6 +16,7 @@ interface Program {
   venue: string
   description: string | null
   contacts: string | string[]
+  posterImageUrl: string | null
 }
 
 interface ServiceCard {
@@ -47,7 +48,17 @@ export default function Services() {
     Promise.all([publicApi.getWeeklyPrograms(), publicApi.getSermons()])
       .then(([programsRes, sermonsRes]) => {
         if (programsRes.success && Array.isArray(programsRes.data)) {
-          const progData = programsRes.data as Program[]
+          const progData = (programsRes.data as any[]).map(p => ({
+            id: p.id,
+            title: p.title,
+            day: p.day,
+            startTime: p.start_time,
+            endTime: p.end_time,
+            venue: p.venue,
+            description: p.description,
+            contacts: p.contacts,
+            posterImageUrl: p.poster_image_url || null
+          })) as Program[]
           setPrograms(progData)
           const grouped: Record<string, Program[]> = {}
           progData.forEach((p) => {
@@ -166,6 +177,11 @@ export default function Services() {
                     <div className={styles.programsGrid}>
                       {dayPrograms.map((program) => (
                         <div key={program.id} className={styles.programCard}>
+                          {program.posterImageUrl && (
+                            <div className={styles.programPosterWrap}>
+                              <img src={program.posterImageUrl} alt={program.title} className={styles.programPoster} />
+                            </div>
+                          )}
                           <h3 className={styles.programTitle}>{program.title}</h3>
                           <div className={styles.programTime}>
                             <span>{program.startTime} - {program.endTime}</span>
