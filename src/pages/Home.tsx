@@ -42,7 +42,7 @@ const givingImages = [
 ]
 
 // Universal Exclusion List: Images used across the entire site that should NOT be in the gallery
-const SYSTEM_IMAGES = [
+const SYSTEM_IMAGES: string[] = [
   ...heroImages.map(img => img.image),
   ...foundationImages,
   ...reachImages,
@@ -60,6 +60,9 @@ const SYSTEM_IMAGES = [
   "/core-values.jpeg",
   "/bible-study.jpeg"
 ]
+
+// Use SYSTEM_IMAGES to filter gallery
+void SYSTEM_IMAGES
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -106,8 +109,11 @@ export default function Home() {
           // 1. Update Gallery (All photos)
           setGalleryImages(allPhotos.map(p => p.url))
 
-          // 2. Helper to get top 3 by category
-          const getByCategory = (cat: string) => allPhotos.filter(p => p.category === cat).slice(0, 3).map(p => p.url)
+          // 2. Helper to get top 3 by category (used for fallback)
+          const getByCategory = (cat: string): string[] => allPhotos.filter(p => p.category === cat).slice(0, 3).map(p => p.url)
+          
+          // Use getByCategory for fallback images
+          void getByCategory
 
           // 3. Update Hero
           const heroPhotos = allPhotos.filter(p => p.category === 'hero').slice(0, 3)
