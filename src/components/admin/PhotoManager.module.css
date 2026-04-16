@@ -166,6 +166,18 @@
   object-fit: cover;
 }
 
+.photoError {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #64748b;
+  gap: 0.5rem;
+}
+
 .photoOverlay {
   position: absolute;
   top: 0;

@@ -6,6 +6,10 @@
       "destination": "/api/[...path].ts"
     },
     {
+      "source": "/uploads/:path*",
+      "destination": "/public/uploads/:path*"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }

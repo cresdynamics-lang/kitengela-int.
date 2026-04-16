@@ -34,20 +34,22 @@ export default function PhotoManager() {
   const [uploading, setUploading] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [dragActive, setDragActive] = useState(false)
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     fetchPhotos()
 
-    const channel = supabase
-      .channel('admin:photos')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'photos' }, () => {
-        fetchPhotos()
-      })
-      .subscribe()
+    // Disable realtime subscription for now to improve loading performance
+    // const channel = supabase
+    //   .channel('admin:photos')
+    //   .on('postgres_changes', { event: '*', schema: 'public', table: 'photos' }, () => {
+    //     fetchPhotos()
+    //   })
+    //   .subscribe()
 
     return () => {
-      supabase.removeChannel(channel)
+      // supabase.removeChannel(channel)
     }
   }, [])
 
@@ -112,6 +114,8 @@ export default function PhotoManager() {
         setSelectedFile(null)
         const fileInput = document.getElementById('photo-input') as HTMLInputElement
         if (fileInput) fileInput.value = ''
+        // Refresh photos after upload to get the latest data
+        fetchPhotos()
       }
     } catch (error: any) {
       alert(error.message || 'Upload failed')
@@ -148,6 +152,10 @@ export default function PhotoManager() {
     } catch (error: any) {
       alert(error.message || 'Update failed')
     }
+  }
+
+  const handleImageError = (photoId: string) => {
+    setImageErrors(prev => new Set([...prev, photoId]))
   }
 
   const formatFileSize = (bytes: number) => {
@@ -232,11 +240,19 @@ export default function PhotoManager() {
             photos.map((photo) => (
               <div key={photo.id} className={styles.photoCard}>
                 <div className={styles.photoContainer}>
-                  <img
-                    src={photo.url}
-                    alt={photo.originalName}
-                    className={styles.photo}
-                  />
+                  {imageErrors.has(photo.id) ? (
+                    <div className={styles.photoError}>
+                      <FileImage size={32} />
+                      <span>Failed to load</span>
+                    </div>
+                  ) : (
+                    <img
+                      src={photo.url}
+                      alt={photo.originalName}
+                      className={styles.photo}
+                      onError={() => handleImageError(photo.id)}
+                    />
+                  )}
                   <div className={styles.photoOverlay}>
                     <button
                       onClick={() => handleDelete(photo.filename)}
