@@ -36,6 +36,11 @@ export default function Header() {
     return () => clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    setIsMenuOpen(false)
+    setShowPlayer(false)
+  }, [location.pathname])
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
 

@@ -150,7 +150,7 @@ export default function Services() {
         ]
 
   return (
-    <main>
+    <div>
       <Header />
       <PageHeader 
         title="Services & Programs" 
@@ -162,6 +162,7 @@ export default function Services() {
         <section className={styles.carouselSection}>
           <h2 className={styles.carouselTitle}>Church Life & Activities</h2>
             <Carousel images={servicesCarousel} hideDivider={true} />
+        </section>
         <div className={styles.featuredGrid}>
           {effectiveServiceCards.map((card) => (
               <div key={card.id} className={styles.featuredCard}>
@@ -241,6 +242,6 @@ export default function Services() {
         )}
       </div>
       <Footer />
-    </main>
+    </div>
   )
 }
