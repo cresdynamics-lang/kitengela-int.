@@ -253,7 +253,7 @@ app.get('/api/public/site', async (_req, res) => {
     res.json({ success: true, data: rows[0] || null })
   } catch (e: any) {
     console.error('GET site_settings:', e.message)
-    res.status(500).json({ success: false, error: 'Failed to fetch site settings' })
+    res.json({ success: true, data: null })
   }
 })
 
@@ -265,8 +265,7 @@ app.get('/api/public/live', async (_req, res) => {
     res.json({ success: true, data: rows[0] || null })
   } catch (e: any) {
     console.error('GET live_streams error:', e.message)
-    console.error('Full error:', e)
-    res.status(503).json({ success: false, error: 'Database unavailable. Check Supabase credentials.' })
+    res.json({ success: true, data: null })
   }
 })
 
@@ -279,7 +278,7 @@ app.get('/api/public/programs/weekly', async (_req, res) => {
     res.json({ success: true, data: rows })
   } catch (e: any) {
     console.error('GET programs:', e.message)
-    res.status(503).json({ success: false, error: 'Database unavailable.' })
+    res.json({ success: true, data: [] })
   }
 })
 
@@ -293,7 +292,7 @@ app.get('/api/public/programs', async (req, res) => {
     res.json({ success: true, data: rows })
   } catch (e: any) {
     console.error('GET programs by day:', e.message)
-    res.status(500).json({ success: false, error: 'Failed to fetch programs' })
+    res.json({ success: true, data: [] })
   }
 })
 
@@ -303,7 +302,7 @@ app.get('/api/public/sermons', async (_req, res) => {
     res.json({ success: true, data: rows })
   } catch (e: any) {
     console.error('GET sermons:', e.message)
-    res.status(503).json({ success: false, error: 'Database unavailable.' })
+    res.json({ success: true, data: [] })
   }
 })
 
@@ -313,7 +312,7 @@ app.get('/api/public/sermons/source', async (_req, res) => {
     res.json({ success: true, data: rows[0] || null })
   } catch (e: any) {
     console.error('GET sermon_sources:', e.message)
-    res.status(500).json({ success: false, error: 'Failed to fetch sermon source' })
+    res.json({ success: true, data: null })
   }
 })
 
@@ -323,7 +322,7 @@ app.get('/api/public/leaders', async (_req, res) => {
     res.json({ success: true, data: rows })
   } catch (e: any) {
     console.error('GET leaders:', e.message)
-    res.status(500).json({ success: false, error: 'Failed to fetch leaders' })
+    res.json({ success: true, data: [] })
   }
 })
 
@@ -333,7 +332,7 @@ app.get('/api/public/links', async (_req, res) => {
     res.json({ success: true, data: rows })
   } catch (e: any) {
     console.error('GET update_links:', e.message)
-    res.status(500).json({ success: false, error: 'Failed to fetch links' })
+    res.json({ success: true, data: [] })
   }
 })
 
@@ -343,7 +342,7 @@ app.get('/api/public/events', async (_req, res) => {
     res.json({ success: true, data: rows })
   } catch (e: any) {
     console.error('GET events:', e.message)
-    res.status(500).json({ success: false, error: 'Failed to fetch events' })
+    res.json({ success: true, data: [] })
   }
 })
 
@@ -353,7 +352,7 @@ app.get('/api/public/events/upcoming', async (_req, res) => {
     res.json({ success: true, data: rows })
   } catch (e: any) {
     console.error('GET upcoming events:', e.message)
-    res.status(500).json({ success: false, error: 'Failed to fetch upcoming events' })
+    res.json({ success: true, data: [] })
   }
 })
 
