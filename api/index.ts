@@ -235,38 +235,7 @@ app.get('/api/public/photos', async (_req, res) => {
     res.json({ success: true, data: photos })
   } catch (e: any) {
     console.error('GET public/photos:', e.message)
-    
-    // FALLBACK: Read from filesystem if DB table doesn't exist yet
-    try {
-      const publicDir = path.join(process.cwd(), 'public')
-      const uploadsDir = path.join(publicDir, 'uploads')
-      
-      const files: any[] = []
-      
-      // 1. Root public images
-      if (fs.existsSync(publicDir)) {
-        const rootFiles = fs.readdirSync(publicDir)
-        rootFiles.forEach(file => {
-          if (file.match(/\.(jpg|jpeg|png|webp)$/i) && file.toLowerCase().includes('whatsapp')) {
-            files.push({ id: file, filename: file, url: `/${file}`, category: 'general' })
-          }
-        })
-      }
-      
-      // 2. Uploads images (Only WhatsApp if that's the rule, but usually uploads are all valid)
-      if (fs.existsSync(uploadsDir)) {
-        const uploadFiles = fs.readdirSync(uploadsDir)
-        uploadFiles.forEach(file => {
-          if (file.match(/\.(jpg|jpeg|png|webp)$/i) && file.toLowerCase().includes('whatsapp')) {
-            files.push({ id: file, filename: file, url: `/uploads/${file}`, category: 'general' })
-          }
-        })
-      }
-      
-      res.json({ success: true, data: files, fallback: true })
-    } catch (fsError: any) {
-      res.status(500).json({ success: false, error: 'Failed to fetch photos' })
-    }
+    res.status(500).json({ success: false, error: 'Failed to fetch photos' })
   }
 })
 
