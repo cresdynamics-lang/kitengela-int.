@@ -65,6 +65,20 @@ const upload = multer({
 const ENV_ADMIN_TOKEN = 'env-admin-token'
 const PHOTO_BUCKET = 'church-gallery'
 
+async function ensurePhotoBucket(supabase: ReturnType<typeof getSupabaseAdmin>) {
+  const { data: bucket, error } = await supabase.storage.getBucket(PHOTO_BUCKET)
+  if (!error && bucket) return
+
+  const { error: createError } = await supabase.storage.createBucket(PHOTO_BUCKET, {
+    public: true,
+    fileSizeLimit: 50 * 1024 * 1024,
+  })
+
+  if (createError && !createError.message.toLowerCase().includes('already exists')) {
+    throw createError
+  }
+}
+
 const normalizeIdentifier = (value: string | undefined) => (value || '').trim().toLowerCase()
 
 const getEnvAdmin = () => {
@@ -700,8 +714,9 @@ app.post('/api/admin/photos', upload.single('photo'), async (req, res) => {
     }
 
     const supabase = getSupabaseAdmin()
+    await ensurePhotoBucket(supabase)
     const fileName = `${Date.now()}-${req.file.originalname}`
-    const filePath = `photos/${fileName}`
+    const filePath = fileName
 
     const { error: uploadError } = await supabase.storage
       .from(PHOTO_BUCKET)
@@ -712,7 +727,10 @@ app.post('/api/admin/photos', upload.single('photo'), async (req, res) => {
 
     if (uploadError) {
       console.error('Supabase storage upload error:', uploadError)
-      return res.status(500).json({ success: false, error: 'Failed to upload to storage' })
+      return res.status(500).json({
+        success: false,
+        error: uploadError.message || 'Failed to upload to storage',
+      })
     }
 
     const { data: urlData } = supabase.storage.from(PHOTO_BUCKET).getPublicUrl(filePath)
@@ -766,7 +784,7 @@ app.delete('/api/admin/photos/:filename', async (req, res) => {
 
     const { error: storageError } = await supabase.storage
       .from(PHOTO_BUCKET)
-      .remove([`photos/${filename}`])
+      .remove([filename])
 
     if (storageError) {
       console.error('Storage deletion error:', storageError)
