@@ -63,6 +63,7 @@ const upload = multer({
 })
 
 const ENV_ADMIN_TOKEN = 'env-admin-token'
+const PHOTO_BUCKET = 'church-gallery'
 
 const normalizeIdentifier = (value: string | undefined) => (value || '').trim().toLowerCase()
 
@@ -703,7 +704,7 @@ app.post('/api/admin/photos', upload.single('photo'), async (req, res) => {
     const filePath = `photos/${fileName}`
 
     const { error: uploadError } = await supabase.storage
-      .from('photos')
+      .from(PHOTO_BUCKET)
       .upload(filePath, req.file.buffer, {
         contentType: req.file.mimetype,
         upsert: true,
@@ -714,7 +715,7 @@ app.post('/api/admin/photos', upload.single('photo'), async (req, res) => {
       return res.status(500).json({ success: false, error: 'Failed to upload to storage' })
     }
 
-    const { data: urlData } = supabase.storage.from('photos').getPublicUrl(filePath)
+    const { data: urlData } = supabase.storage.from(PHOTO_BUCKET).getPublicUrl(filePath)
 
     const row = await dbInsert<any>('photos', {
       id: crypto.randomUUID(),
@@ -764,7 +765,7 @@ app.delete('/api/admin/photos/:filename', async (req, res) => {
     const supabase = getSupabaseAdmin()
 
     const { error: storageError } = await supabase.storage
-      .from('photos')
+      .from(PHOTO_BUCKET)
       .remove([`photos/${filename}`])
 
     if (storageError) {
