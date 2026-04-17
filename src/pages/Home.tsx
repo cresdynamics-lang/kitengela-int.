@@ -11,34 +11,34 @@ import { supabase } from '@/lib/supabase'
 import styles from './Home.module.css'
 
 const heroImages = [
-  { id: 0, title: "Welcome to VOSH Church International", image: "/Carousel1.jpg", description: "Transforming lives through the pure Word and building strong faith for our community." },
+  { id: 0, title: "Katan Ngila #House_Of_Solutions", image: "/Carousel1.jpg", description: "Transforming lives through the pure Word and building strong faith for our community." },
   { id: 1, title: "Manifesting Christ in Our Community", image: "/Carousel2.jpg", description: "We are a House of Solutions, reaching out with love and power in Kitengela." },
   { id: 2, title: "Experience Supernatural Worship", image: "/carousel3.jpeg", description: "Join us this Sunday along Baraka Road for a time of refreshment and miracles." },
 ]
 
 const foundationImages = [
-  "/core-values.jpeg",
-  "/mission-vision.jpeg",
-  "/bible-study.jpeg"
+  "/whatsapp-12.jpeg",
+  "/whatsapp-13.jpeg",
+  "/whatsapp-14.jpeg"
 ]
 
 const reachImages = [
-  "/outreach-1.jpeg",
-  "/outreach-2.jpeg",
-  "/Carousel1.jpg",
-  "/Carousel4.jpg"
+  "/whatsapp-15.jpeg",
+  "/whatsapp-16.jpeg",
+  "/whatsapp-17.jpeg",
+  "/whatsapp-18.jpeg"
 ]
 
 const prayerImages = [
   "/whatsapp-1.jpeg",
-  "/whatsapp-15.jpeg",
-  "/whatsapp-11.jpeg"
+  "/whatsapp-2.jpeg",
+  "/whatsapp-3.jpeg"
 ]
 
 const givingImages = [
-  "/unity.jpg",
-  "/whatsapp-7.jpeg",
-  "/woman-praying.jpg"
+  "/whatsapp-1.jpeg",
+  "/whatsapp-2.jpeg",
+  "/whatsapp-3.jpeg"
 ]
 
 // Universal Exclusion List: Images used across the entire site that should NOT be in the gallery

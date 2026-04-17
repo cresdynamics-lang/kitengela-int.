@@ -19,9 +19,7 @@ const FALLBACK = {
 const leadershipCarouselImages = [
   { id: 1, title: "Rev. Evans O. Kochoo - Senior Pastor", image: "/Rev.Evans1.jpeg", description: "Senior Pastor and founder of VOSH Church International Kitengela, known as 'The Eagle'" },
   { id: 2, title: "Rev. Evans O. Kochoo - Teaching Ministry", image: "/Rev.Evans2.jpeg", description: "Passionate teacher of God's Word with a heart for transforming lives" },
-  { id: 3, title: "Rev. Evans O. Kochoo - Leadership", image: "/Rev.Evans3.jpeg", description: "Leading the church with wisdom, integrity, and a vision for community impact" },
-  { id: 4, title: "Past. Nancy Sai - Ministry Leader", image: "/Past.Nancy.Sai.jpeg", description: "Dedicated ministry leader serving alongside Rev. Evans in various church ministries" },
-  { id: 5, title: "Pastor Nancy Sai - Women's Ministry", image: "/PastorNancySai.jpeg", description: "Leading women's ministry and empowering women in their faith journey" }
+  { id: 3, title: "Rev. Evans O. Kochoo - Leadership", image: "/Rev.Evans3.jpeg", description: "Leading the church with wisdom, integrity, and a vision for community impact" }
 ]
 
 export default function About() {

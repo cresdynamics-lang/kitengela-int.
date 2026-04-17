@@ -28,14 +28,14 @@ interface ServiceCard {
 }
 
 const churchActivitiesCarouselImages = [
-  { id: 1, title: "Sunday Worship Experience", image: "/sunday-services.jpeg", description: "Join us every Sunday for powerful worship and life-changing messages" },
-  { id: 2, title: "Bible Study Sessions", image: "/bible-study.jpeg", description: "Deep dive into God's Word and grow in your understanding of Scripture" },
-  { id: 3, title: "Corporate Prayer", image: "/church-praying.jpg", description: "Experience the power of corporate prayer and intercession" },
-  { id: 4, title: "Online Connect Fellowship", image: "/online-connect.jpeg", description: "Join our Online Connect Fellowship every Thursday from 8:30 PM - 9:30 PM" },
-  { id: 5, title: "Men's Fellowship", image: "/man-praying.jpg", description: "Men gathering together to reclaim the divine mandate of manhood" },
-  { id: 6, title: "Our Core Values", image: "/core-values.jpeg", description: "Prayer, Stewardship, Holiness, Advocacy, and Unity form our foundation" },
-  { id: 7, title: "Praise & Worship", image: "/praise-worship.jpg", description: "Celebrate God's goodness through vibrant praise and worship" },
-  { id: 8, title: "Midweek Refreshment", image: "/midweek-fri.jpeg", description: "Midweek spiritual refreshment and fellowship" }
+  { id: 1, title: "Sunday Worship Experience", image: "/whatsapp-4.jpeg", description: "Join us every Sunday for powerful worship and life-changing messages" },
+  { id: 2, title: "Bible Study Sessions", image: "/whatsapp-5.jpeg", description: "Deep dive into God's Word and grow in your understanding of Scripture" },
+  { id: 3, title: "Corporate Prayer", image: "/whatsapp-6.jpeg", description: "Experience the power of corporate prayer and intercession" },
+  { id: 4, title: "Online Connect Fellowship", image: "/whatsapp-7.jpeg", description: "Join our Online Connect Fellowship every Thursday from 8:30 PM - 9:30 PM" },
+  { id: 5, title: "Men's Fellowship", image: "/whatsapp-8.jpeg", description: "Men gathering together to reclaim the divine mandate of manhood" },
+  { id: 6, title: "Our Core Values", image: "/whatsapp-9.jpeg", description: "Prayer, Stewardship, Holiness, Advocacy, and Unity form our foundation" },
+  { id: 7, title: "Praise & Worship", image: "/whatsapp-10.jpeg", description: "Celebrate God's goodness through vibrant praise and worship" },
+  { id: 8, title: "Midweek Refreshment", image: "/whatsapp-11.jpeg", description: "Midweek spiritual refreshment and fellowship" }
 ]
 
 export default function Services() {
