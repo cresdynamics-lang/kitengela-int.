@@ -2,113 +2,81 @@ import { Link } from 'react-router-dom'
 import styles from './Footer.module.css'
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
   const phoneNumbers = [
     '+254 722 566 399',
     '+254 720 276 162',
     '+254 720 977 189',
     '+254 775 036 515',
     '+254 703 182 203',
-  ]
+  ];
 
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        <div className={styles.footerContent}>
+        <div className={styles.footerGrid}>
+          {/* Branding */}
           <div className={styles.footerSection}>
             <h3 className={styles.footerTitle}>Voice Of Salvation And Healing Church Int&apos;l</h3>
             <p className={styles.footerDescription}>KITENGELA</p>
-            <p className={styles.slogan}>
-              <strong>House of Solutions</strong> - <strong>Manifesting Christ</strong>
+            <p className={styles.slogan}><strong>House of Solutions</strong> - <strong>Manifesting Christ</strong></p>
+          </div>
+          {/* Quick Links */}
+          <div className={styles.footerSection}>
+            <h4 className={styles.footerHeading}>Quick Links</h4>
+            <ul className={styles.footerLinks}>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/about">About Us</Link></li>
+              <li><Link to="/services">Services</Link></li>
+              <li><Link to="/leadership">Leadership</Link></li>
+              <li><Link to="/give">Give</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+            </ul>
+          </div>
+          {/* Contact */}
+          <div className={styles.footerSection}>
+            <h4 className={styles.footerHeading}>Contact</h4>
+            <div className={styles.phoneNumbers}>
+              {phoneNumbers.map((phone, idx) => (
+                <a key={idx} href={`tel:${phone.replace(/\s/g, '')}`} className={styles.phoneLink}>{phone}</a>
+              ))}
+            </div>
+            <p className={styles.footerText}>
+              <strong>WhatsApp:</strong>{' '}
+              <a href="https://wa.me/254722566399" target="_blank" rel="noopener noreferrer" className={styles.whatsappLink}>
+                +254 722 566 399
+              </a>
             </p>
           </div>
-
-          <div className={styles.footerRow}>
-            <div className={styles.footerSection}>
-              <h4 className={styles.footerHeading}>Quick Links</h4>
-              <ul className={styles.footerLinks}>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About Us</Link></li>
-                <li><Link to="/services">Services</Link></li>
-                <li><Link to="/leadership">Leadership</Link></li>
-                <li><Link to="/give">Give</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
-              </ul>
-            </div>
-
-            <div className={styles.footerSection}>
-              <h4 className={styles.footerHeading}>Contact</h4>
-              <div className={styles.phoneNumbers}>
-                <strong>Phone:</strong>
-                {phoneNumbers.map((phone, idx) => (
-                  <a key={idx} href={`tel:${phone.replace(/\s/g, '')}`} className={styles.phoneLink}>
-                    {phone}
-                  </a>
-                ))}
-              </div>
-              <p className={styles.footerText}>
-                <strong>WhatsApp:</strong>{' '}
-                <a href="https://wa.me/254722566399" target="_blank" rel="noopener noreferrer" className={styles.whatsappLink}>
-                  +254 722 566 399
-                </a>
-              </p>
-            </div>
-
-            <div className={styles.footerSection}>
-              <h4 className={styles.footerHeading}>Location</h4>
-              <p className={styles.footerText}>
-                Kitengela, Kenya
-                <br />
-                Along Baraka Road / Treewa Road
-                <br />
-                Next to Balozi Junior Academy
-              </p>
-            </div>
-          </div>
-
+          {/* Location, Support, Social */}
           <div className={styles.footerSection}>
-            <h4 className={styles.footerHeading}>Give & Support</h4>
+            <h4 className={styles.footerHeading}>Location</h4>
             <p className={styles.footerText}>
-              <strong>M-Pesa Paybill:</strong> 400222
-              <br />
+              Kitengela, Kenya<br />
+              Along Baraka Road / Treewa Road<br />
+              Next to Balozi Junior Academy
+            </p>
+            <h4 className={styles.footerHeading} style={{marginTop: '0.3rem'}}>Give & Support</h4>
+            <p className={styles.footerText}>
+              <strong>M-Pesa Paybill:</strong> 400222<br />
               <strong>Account:</strong> 1756443#offering/tithe
             </p>
             <Link to="/give" className={styles.giveLink}>Learn More -&gt;</Link>
             <div className={styles.socialLinks}>
-              <h5 className={styles.socialTitle}>Follow Us</h5>
               <div className={styles.socialIcons}>
-                <a
-                  href="https://www.facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.socialIcon}
-                  aria-label="Facebook"
-                >
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Facebook">
                   <i className="fab fa-facebook-f"></i>
                 </a>
-                <a
-                  href="https://www.youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.socialIcon}
-                  aria-label="YouTube"
-                >
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="YouTube">
                   <i className="fab fa-youtube"></i>
                 </a>
-                <a
-                  href="https://www.instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.socialIcon}
-                  aria-label="Instagram"
-                >
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Instagram">
                   <i className="fab fa-instagram"></i>
                 </a>
               </div>
             </div>
           </div>
         </div>
-
         <div className={styles.footerBottom}>
           <p className={styles.copyright}>
             &copy; {currentYear} Voice Of Salvation And Healing Church Int&apos;l - Kitengela. All rights reserved.
@@ -128,5 +96,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

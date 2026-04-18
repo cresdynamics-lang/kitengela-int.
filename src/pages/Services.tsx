@@ -28,9 +28,9 @@ interface ServiceCard {
 }
 
 const churchActivitiesCarouselImages = [
-  { id: 1, title: "Sunday Worship Experience", image: "/whatsapp-4.jpeg", description: "Join us every Sunday for powerful worship and life-changing messages" },
-  { id: 2, title: "Bible Study Sessions", image: "/whatsapp-5.jpeg", description: "Deep dive into God's Word and grow in your understanding of Scripture" },
-  { id: 3, title: "Corporate Prayer", image: "/whatsapp-6.jpeg", description: "Experience the power of corporate prayer and intercession" },
+  { id: 1, title: "Sunday Worship Experience", image: "/activities-1.jpg", description: "Join us every Sunday for powerful worship and life-changing messages" },
+  { id: 2, title: "Bible Study Sessions", image: "/activities-2.jpg", description: "Deep dive into God's Word and grow in your understanding of Scripture" },
+  { id: 3, title: "Corporate Prayer", image: "/activities-3.jpg", description: "Experience the power of corporate prayer and intercession" },
   { id: 4, title: "Online Connect Fellowship", image: "/whatsapp-7.jpeg", description: "Join our Online Connect Fellowship every Thursday from 8:30 PM - 9:30 PM" },
   { id: 5, title: "Men's Fellowship", image: "/whatsapp-8.jpeg", description: "Men gathering together to reclaim the divine mandate of manhood" },
   { id: 6, title: "Our Core Values", image: "/whatsapp-9.jpeg", description: "Prayer, Stewardship, Holiness, Advocacy, and Unity form our foundation" },
